@@ -480,6 +480,15 @@
     "@vuepress/core" "2.0.0-beta.23"
     prismjs "^1.24.1"
 
+"@vuepress/plugin-register-components@^2.0.0-beta.23":
+  version "2.0.0-beta.23"
+  resolved "https://registry.nlark.com/@vuepress/plugin-register-components/download/@vuepress/plugin-register-components-2.0.0-beta.23.tgz?cache=0&sync_timestamp=1627813443016&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vuepress%2Fplugin-register-components%2Fdownload%2F%40vuepress%2Fplugin-register-components-2.0.0-beta.23.tgz#2ec580fb26b93055a2bccbfaf8e16bc7602c62e5"
+  integrity sha1-LsWA+ya5MFWivMv6+OFrx2AsYuU=
+  dependencies:
+    "@vuepress/core" "2.0.0-beta.23"
+    "@vuepress/utils" "2.0.0-beta.23"
+    chokidar "^3.5.2"
+
 "@vuepress/plugin-theme-data@2.0.0-beta.23":
   version "2.0.0-beta.23"
   resolved "https://registry.nlark.com/@vuepress/plugin-theme-data/download/@vuepress/plugin-theme-data-2.0.0-beta.23.tgz?cache=0&sync_timestamp=1627813605221&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vuepress%2Fplugin-theme-data%2Fdownload%2F%40vuepress%2Fplugin-theme-data-2.0.0-beta.23.tgz#0b7d89451d3dbba6b93ba9309916a274c78214f4"
@@ -950,7 +959,12 @@ camel-case@^4.1.1:
     pascal-case "^3.1.2"
     tslib "^2.0.3"
 
-caniuse-lite@^1.0.30001243, caniuse-lite@^1.0.30001248:
+caniuse-lite@^1.0.30001243:
+  version "1.0.30001251"
+  resolved "https://registry.nlark.com/caniuse-lite/download/caniuse-lite-1.0.30001251.tgz?cache=0&sync_timestamp=1628744198573&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001251.tgz#6853a606ec50893115db660f82c094d18f096d85"
+  integrity sha1-aFOmBuxQiTEV22YPgsCU0Y8JbYU=
+
+caniuse-lite@^1.0.30001248:
   version "1.0.30001249"
   resolved "https://registry.nlark.com/caniuse-lite/download/caniuse-lite-1.0.30001249.tgz#90a330057f8ff75bfe97a94d047d5e14fabb2ee8"
   integrity sha1-kKMwBX+P91v+l6lNBH1eFPq7Lug=
@@ -2512,9 +2526,9 @@ multicast-dns@^6.0.1:
     thunky "^1.0.2"
 
 nanoid@^3.1.23:
-  version "3.1.24"
-  resolved "https://registry.nlark.com/nanoid/download/nanoid-3.1.24.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnanoid%2Fdownload%2Fnanoid-3.1.24.tgz#d7ac20215f595c26d314ee5671169a27b609025f"
-  integrity sha1-16wgIV9ZXCbTFO5WcRaaJ7YJAl8=
+  version "3.1.25"
+  resolved "https://registry.nlark.com/nanoid/download/nanoid-3.1.25.tgz#09ca32747c0e543f0e1814b7d3793477f9c8e152"
+  integrity sha1-CcoydHwOVD8OGBS303k0d/nI4VI=
 
 negotiator@0.6.2:
   version "0.6.2"
