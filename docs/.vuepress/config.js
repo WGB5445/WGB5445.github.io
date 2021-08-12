@@ -1,7 +1,9 @@
+const resolve = require('path').resolve
 module.exports = {
 	lang:'zh-CN',
 	title:"WGB的小破站",
 	description : "分享技术，开源万岁",
+  theme:  resolve(__dirname, './theme'),
 	themeConfig: {
     		logo: 'https://vuejs.org/images/logo.png',
 		navbar: [
@@ -12,8 +14,12 @@ module.exports = {
       },
       // NavbarGroup
       {
-        text: 'Group',
-        children: [{text:'foo.md',link:'/group/foo.md'}, '/group/bar.md'],
+        text: '前端技术',
+        children: [
+          { text:'HTML',          link:'/front/html'        },
+          { text:'CSS',           link:'/front/css'         },
+          { text:'JavaScript',    link:'/front/javascript'  },
+           '/group/bar.md'],
       },
       // 字符串 - 页面文件路径
       '/bar/README.md',

@@ -7,11 +7,11 @@ heroAlt: 哎哎哎？我Logo呢？
 heroText: 欢迎来到WGB的小破站
 tagline: 分享技术，开源万岁
 actions:
-  - text: 目录
+  - text: 开始
     link: /contents.html
     type: secondary
   - text: 关于
-    link: /guide/
+    link: /about
     type: secondary
 features:
   - title: 毒鸡汤
