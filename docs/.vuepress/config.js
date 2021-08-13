@@ -22,6 +22,10 @@ module.exports = {
           text: '首页',
           link: '/',
         },
+        {
+          text:'目录',
+          link:'/contents'
+        },
         // NavbarGroup
         {
           text: '前端技术',
@@ -57,6 +61,7 @@ module.exports = {
       // 字符串 - 页面文件路径
       
     ],
+    /*
     sidebar: {
       '/front': [
         {
@@ -76,7 +81,9 @@ module.exports = {
         },
       ],
     },
-  	},
+  	
+    */
+  },
   plugins: [
       [
         '@vuepress/register-components',
@@ -84,5 +91,8 @@ module.exports = {
           componentsDir: path.resolve(__dirname, './components'),
         },
       ],
+      
     ],
+    
+  
 }
