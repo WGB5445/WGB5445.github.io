@@ -34,6 +34,26 @@ module.exports = {
           ],
          
         },
+        {
+          text: '后端技术',
+          activeMatch: '^/back/',
+          children: [
+            { text:'Golang',          link:'/back/golang'       },
+            { text:'Java',            link:'/back/java'         },
+            { text:'Python',          link:'/back/python'       },
+            { text:'Rust',            link:'/back/rust'         },
+          ],
+         
+        },
+        {
+          text: '区块链技术',
+          activeMatch: '^/blockchain/',
+          children: [
+            { text:'Starcoin',          link:'/blockchain/Starcoin'        },
+           
+          ],
+         
+        },
       // 字符串 - 页面文件路径
       
     ],
