@@ -6,18 +6,7 @@
 - 外部样式表可以极大提高工作效率
 - 外部样式表通常存储在 CSS 文件中
 - 多个样式定义可层叠为一个
-<Badge text="演示" />
-
-<style>
-p {
-	color:red;
-	text-align:center;
-} 
-</style>
-
-<p>Hello World!</p>
-<p>这个段落采用CSS样式化。</p>
-
+### 代码演示
 ```html  
 <style>
 p {
