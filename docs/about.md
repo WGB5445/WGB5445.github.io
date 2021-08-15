@@ -7,4 +7,4 @@ contributors: true
 我就是我，不一样的烟火！
 
 <el-button type="success" plain @click="this.$router.push('/')" stye="background:#ffff;">回家</el-button>
-
+<getPages/>
