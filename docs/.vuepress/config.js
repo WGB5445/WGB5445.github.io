@@ -58,6 +58,15 @@ module.exports = {
           ],
          
         },
+        {
+          text: '其他',
+          activeMatch: '^/other/',
+          children: [
+            { text:'正则表达式'   ,          link:'/other/regex'        },
+            { text:'Git'       ,            link:'/other/git'},
+          ],
+         
+        },
       // 字符串 - 页面文件路径
       
     ],
