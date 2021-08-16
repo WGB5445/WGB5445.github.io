@@ -9,7 +9,7 @@ tagline: 分享技术，开源万岁
 actions:
   - text: 开始
     link: /contents.html
-    type: secondary
+    type: primary
   - text: 关于
     link: /about
     type: secondary

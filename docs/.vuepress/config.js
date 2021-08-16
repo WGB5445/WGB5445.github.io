@@ -94,6 +94,12 @@ module.exports = {
     */
   },
   plugins: [
+    [
+      '@vuepress/plugin-search',
+      {
+        maxSuggestions: 10
+      },
+    ],
       [
         '@vuepress/register-components',
         {

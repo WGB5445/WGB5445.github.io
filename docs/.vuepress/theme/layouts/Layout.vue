@@ -1,7 +1,9 @@
 <template>
   
   <Layout>
-
+    <!-- <template #navbar-after>
+      <SearchBox />
+    </template> -->
     <template #page-bottom>
       <div class="my-footer">MIT Licensed | Copyright © 2021-present 不霁何虹</div>
     </template>
