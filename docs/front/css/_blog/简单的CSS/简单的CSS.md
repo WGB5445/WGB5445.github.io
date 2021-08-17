@@ -7,6 +7,37 @@
 - 外部样式表通常存储在 CSS 文件中
 - 多个样式定义可层叠为一个
 ### 代码演示
+<StyleDiv>
+<p>Hello World!</p>
+<p>这个段落采用CSS样式化。</p>
+</StyleDiv>
+
+<script>
+import { h, ref } from 'vue'
+
+const StyleDiv = (_, ctx) => h(
+  'div',
+  {
+    class: 'sample-css-test',
+  },
+  ctx.slots.default()
+)
+
+export default {
+  components: {
+    StyleDiv,
+  },
+
+  setup() {
+  }
+}
+</script>
+<style>
+	.sample-css-test p {
+	color:red;
+	text-align:center;
+	} 
+</style>
 ```html  
 <style>
 p {
