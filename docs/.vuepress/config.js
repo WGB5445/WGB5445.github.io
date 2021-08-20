@@ -64,7 +64,8 @@ module.exports = {
           children: [
             { text:'正则表达式'   ,          link:'/other/regex'        },
             { text:'Git'       ,            link:'/other/git'},
-            {text:'Linux'       ,         link:'/other/linux'},
+            { text:'Linux'       ,         link:'/other/linux'},
+            { text:'Docker'     ,          link:'/other/docker'},
           ],
          
         },
