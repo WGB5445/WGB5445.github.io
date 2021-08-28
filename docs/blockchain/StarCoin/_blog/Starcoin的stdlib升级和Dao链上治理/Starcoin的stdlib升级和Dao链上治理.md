@@ -1,8 +1,8 @@
 ---
 title: Starcoin的stdlib升级和Dao链上治理
 ---
-# Starcoin 的 stdlib
-&emsp;&emsp;Starcoin 与其他币种不同，startcoin把的共识、区块设置、区块奖励、账号定义、Token定义、NFT协议等预先定义在stdlib中。stdlib是存在于链上的合约库，所以starcoin 可以不使用硬编码来实现区块奖励、区块算法、共识等定义，同时stdlib也可以通过Dao链上治理的方式进行升级或修复。
+# Starcoin
+&emsp;&emsp;Starcoin 与其他币种不同，Starcoin把的共识、区块设置、区块奖励、账号定义、Token定义、NFT协议等预先定义在stdlib中，以便升级维护统一管理。stdlib是存在于链上的合约库，所以starcoin 可以不使用硬编码来实现区块奖励、区块算法、共识等定义，同时stdlib也可以通过Dao链上治理的方式进行升级或修复。
 ## 一、智能合约：Starcoin vs ETH
 ### 1. 智能合约所使用的语言 
 |项目|区别|
@@ -38,6 +38,7 @@ title: Starcoin的stdlib升级和Dao链上治理
 **Starcoin：**
 >&emsp;&emsp;Starcoin的合约需要升级时Dao去中心化社区投票、Two-phase (两阶段提交)来解决，在升级后就可以使用原地址调用新合约。
 ## 三、合约升级方案：Starcoin VS ETH  
+![合约升级方案流程](./img/合约升级流程.jpg)
 &emsp;&emsp;Starcoin的stdlib合约存在于链上，采用Dao去中心化的管理，社区可通过投票操作来决定合约升级计划的部署等。  
 &emsp;&emsp;代码提交是采用两阶段提交：先提交升级计划，再提交更新代码。  
 整个流程分为七个阶段：
@@ -49,10 +50,16 @@ title: Starcoin的stdlib升级和Dao链上治理
 6. ETRACTED
 7. Upgrade complete
 ### 1. PENDING 
-&emsp;&emsp;在coder 修改代码后向Dao提交一个升级的proposal txn，整个流程进入PENDING状态。等待交易确认后进入下一个阶段。  
+&emsp;&emsp;在coder 修改代码后向Dao提交一个升级的proposal txn，整个流程进入PENDING状态。设置有一段时间使社区对该项议题讨论和了解后进入下一个阶段。  
 ### 2. ACTIVE
-&emsp;&emsp;在上个阶段的交易被区块链确认后，进入ACTIVE阶段，在这个阶段需要社区的人员进行投票，在到达设置的规定时间后转为下个阶段。  
+&emsp;&emsp;在上个阶段的结束后，进入ACTIVE阶段，在这个阶段需要社区的人员进行投票，在到达设置的规定时间后转为下个阶段。  
 ### 3. AGREED
-&emsp;&emsp;在上个阶段到达规定时间后，流程进入到AGREED阶段，在这个阶段中会对投票结果进行统计，如果超过预定占比，则视为升级计划被Dao社区允许，可以进行下一个阶段。如果为超过预定占比，则视为升级计划失败，可以选择再次发起升级计划或其他操作。
+&emsp;&emsp;在上个阶段到达规定时间后，流程进入到AGREED阶段，在这个阶段中会对投票结果进行统计，如果超过预定占比，则视为升级计划被Dao社区允许，在发起公示后，可以进行下一个阶段。
 ### 4.QUEUED
-&emsp;&emsp;在上个阶段的投票结果统计后，流程进入到公示期，这个阶段主要是展示投票结果。
+&emsp;&emsp;在上个阶段的投票结果统计后，流程进入由发起公示后到公示期，这个阶段主要是展示发起人和proposal的信息等，当公示期过去之后进入下个阶段。
+### 5.EXECTABLE  
+&emsp;&emsp;在上个阶段的公示期时间结束后，流程进入到可以升级合约的Two-phase（两阶段提交）的第一个阶段，提交合约代码升级计划。在提交完合约升级计划后即可进入下一个阶段。
+### 6.ETRACTED
+&emsp;&emsp;在上个阶段的提交合约升级计划后，流程进入到升级合约的Two-phase（两阶段提交）的第二个阶段，在此阶段可以提交修复或升级合约的代码，在提交完成后即可进入下个阶段。
+### 7.Upgrade complete
+&emsp;&emsp;在上个阶段的代码提交后，整个合约升级流程结束，在此之后可以使用新的合约代码进行操作。
