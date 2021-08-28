@@ -63,3 +63,188 @@ title: Starcoin的stdlib升级和Dao链上治理
 &emsp;&emsp;在上个阶段的提交合约升级计划后，流程进入到升级合约的Two-phase（两阶段提交）的第二个阶段，在此阶段可以提交修复或升级合约的代码，在提交完成后即可进入下个阶段。
 ### 7.Upgrade complete
 &emsp;&emsp;在上个阶段的代码提交后，整个合约升级流程结束，在此之后可以使用新的合约代码进行操作。
+## 四、合约升级流程操作展示
+### 1. 编写stdlib中的代码
+>此处以stdlib中的**DummyToken.move**为例，增加一个Mymint函数和Mymint脚本。功能为定值造100个DummyToken。  
+
+**DummyToken.move下的 DummyToken Module ：**
+```Move
+  /// Anyone can mint DummyToken, amount should < 10000
+    public fun mint(_account: &signer, amount: u128) : Token<DummyToken> acquires SharedMintCapability{
+        assert(amount <= 10000, Errors::invalid_argument(EMINT_TOO_MUCH));
+        let cap = borrow_global<SharedMintCapability>(token_address());
+        Token::mint_with_capability(&cap.cap, amount)
+    }
+
+    // 在此增加新的函数 
+    public fun Mymint(_account: &signer) : Token<DummyToken> acquires SharedMintCapability{
+        let cap = borrow_global<SharedMintCapability>(token_address());
+        Token::mint_with_capability(&cap.cap, 100)
+    }
+
+    /// Return the token address.
+    public fun token_address(): address {
+        Token::token_address<DummyToken>()
+    }
+```
+**DummyToken.move下的 DummyTokenScripts Module ：**
+```move
+    public(script) fun mint(sender: signer, amount: u128){
+        let token = DummyToken::mint(&sender, amount);
+        let sender_addr = Signer::address_of(&sender);
+        if(Account::is_accept_token<DummyToken>(sender_addr)){
+            Account::do_accept_token<DummyToken>(&sender);
+        };
+        Account::deposit(sender_addr, token);
+    }
+
+    //在此增加新的脚本函数
+    public(script) fun Mymint(sender:signer){
+        let token = DummyToken::Mymint(&sender);
+        let sender_addr = Signer::address_of(&sender);
+        if(Account::is_accept_token<DummyToken>(sender_addr)){
+            Account::do_accept_token<DummyToken>(&sender);
+        };
+        Account::deposit(sender_addr, token);
+    }
+```
+### 2. 准备编译好的二进制的Module
+>在Starcoin 命令行中执行命令，分两步编译、打包出二进制的 Module
+**编译：**
+```shell
+执行：
+    dev compile -s 0x1 path/to/DummyToken.move
+
+结果：
+    {
+        "ok": [
+            "path/to/DummyToken.mv",
+            "path/to/DummyTokenScripts.mv"
+        ]
+    }
+
+```
+**打包：**
+```shell
+执行：
+    dev package -n MymintUpgrade -o storage path/to/DummyToken*
+
+结果：
+    {
+        "ok": {
+            "file": "path/to/storage/MymintUpgrade.blob",
+            "package_hash": "0x6e54935144115233c9decb255d3bcd5f14c7b9d82c968c5f3a0cb1b14f18bce8"
+        }
+    }
+```
+
+### 3. 准备账号以及余额
+**准备账号：**
+>需要两个账号：
+>   1. coder账号：&emsp;&emsp;&emsp;用来提交计划和提交代码等  
+>   2. 投票代表账号：&emsp;&emsp;用来投票 
+
+>使用密钥导入或使用account create 创建账号即可
+**准备余额：**
+>1. coder账号需要一定的STC作为提案和升级等操作的GAS费。
+>2. 投票代表账号需要大量的STC作为投票的票数。
+使用命令行 account unlock **账户地址** 解锁账户
+**获取STC方法：**
+```shell
+默认账户获取：
+    dev get-coin -v 6000000STC
+转账方式：
+    account transfer -s 0x0000000000000000000000000a550c18 -r <账号收款识别码> -v 60000000000000000 -b
+```
+### 4. 提交提案 进入 PENDING
+```shell
+提交提案：
+    dev module-proposal -s <account address> -m <module path> -v <version> -e false
+```
+>- -m 表示升级包的路径；  
+>- -v 表示新的版本号；  
+>- -e 表示是否跳过 module 兼容性检查强制升级，false 表示不跳过兼容性检查，缺省不跳过。
+### 5. 查询提案的状态
+**查看提议id:**
+```shell
+dev call --function 0x1::Dao::proposal_info -t 0x1::STC::STC -t 0x1::UpgradeModuleDaoProposal::UpgradeModuleV2 --arg <proposal address>
+```
+**查看提议状态:**
+```shell
+    dev call --function 0x1::Dao::proposal_state -t 0x1::STC::STC -t 0x1::UpgradeModuleDaoProposal::UpgradeModuleV2 --arg <proposal address> --arg <proposal_id>
+结果:
+    {
+        "ok": [
+            <state_num>
+        ]
+    }
+
+```
+### 6. 等待社区议论 进入 ACTIVE  
+>在PENDING状态下经过一段时间进入投票期,在dev下可以通过sleep方式加快区块链时间进入下个阶段。
+**加速进入：**
+```shell
+加速时间：
+    dev sleep -t 3600000
+生成块（生效时间）：
+    dev gen-block
+```
+**查看提案状态：**
+```shell
+执行：
+    dev call --function 0x1::Dao::proposal_state -t 0x1::STC::STC -t 0x1::UpgradeModuleDaoProposal::UpgradeModuleV2 --arg <proposal address> --arg <proposal_id>
+结果：
+    {
+        "ok": [
+            2
+        ]
+    }
+转为ACTIVE状态
+```
+### 7. 社区投票 进入 AGREED
+>用投票代表账号参与投票后等待投票时间结束后，流程进入AGREED阶段
+```shell
+投票：
+    account execute-function -s <account address> --function 0x1::DaoVoteScripts::cast_vote -t 0x1::STC::STC -t 0x1::UpgradeModuleDaoProposal::UpgradeModuleV2 --arg <proposal address> --arg <proposal_id> --arg true --arg 59000000000000000u128
+```
+### 8. AGREED的提议放入更新队列 进入QUEUED
+>在进入AGREED 以后，任何人都可以将状态为 AGREED 的提议放入更新队列。
+```shell
+dev module-queue -s <account address> -a <proposal address> -i <proposal_id>
+```
+### 9. 公示期等待 进入EXECTABLE
+>公示期的等待时间过去之后，就可以进入执行阶段。dev下可以通过命令加速此阶段
+**加速进入：**
+```shell
+加速时间：
+    dev sleep -t 3600000
+生成块（生效时间）：
+    dev gen-block
+```
+### 10. 提交升级计划  进入ETRACTED
+>这一步是可执行阶段，可以执行升级计划。
+```shell
+dev module-plan -i <proposal_id> -a <proposal address>  -s <account address>
+```
+### 11. 提交代码 进入Upgrade complete
+>在这一步中Dao流程已经结束，两阶段提交流程进入最后一阶段
+**代码模块提交：**
+```shell
+dev module_exe -m path/to/storage/MymintUpgrade.blob -s <account address>
+```
+### 12. 完成合约升级流程
+>至此已经完成整个合约升级过程
+### 13. 升级的验证
+>可以执行DummyTokenScripts模块中的 Mymint函数来校验是否升级成功
+```shell
+执行获取DummyToken 100个：
+    account execute-function --function 0x1::DummyTokenScripts::Mymint -b -s <account address>
+查看DummyToken：
+    account show <account address>
+结果：
+    "balances": {
+      "0x00000000000000000000000000000001::DummyToken::DummyToken": 100,
+      "0x00000000000000000000000000000001::STC::STC": 9999645054
+    }
+```
+
