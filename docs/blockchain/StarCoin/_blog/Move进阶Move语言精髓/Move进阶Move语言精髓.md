@@ -13,6 +13,7 @@ Move语言具有其他区块链语言不具备的特点，利用这些特点可�
 例如：下面这个gif就是价值50美元的Nyan Cat  
 
 ![50万美元的《 Nyan Cat（彩虹猫）》](./img/NFT1.gif)
+
 3. Starcoin 与 NFT
 >Starcoin所使用的智能合约编程语言是专为数字资产而生的Move，数字资产以BTC为起点，中间经历了漫长的发展过程，到现在中间从产生了以太坊，波场等多条公链。由此也诞生出许多优秀的项目，如:CryptoKitties、Decentraland等，其中CryptoKitties在上线过后一度堵死以太坊网络，由此可以窥探到NFT的市场需求。Starcoin 正是为数字资产而来，使用Move的特性可以让NFT等数字资产在Starcoin这条公链中简单、安全、快速的转移或保存。Move语言的三大特性Struct、Ability和 Generic 可以帮助NFT在Starcoin 部署，可以方便的自定义NFT的类型、定义NFT的唯一性和编写通用的NFT的代码。
 
