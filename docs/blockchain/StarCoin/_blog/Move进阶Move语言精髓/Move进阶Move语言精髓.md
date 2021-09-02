@@ -1,284 +1,221 @@
-## Move语言三大精髓与NFT合约
->&emsp;&emsp;在学习完Move语言的初级语法等知识，就可以学习Move进阶知识点。  
-&emsp;&emsp;在Move中最常用同时也是最有特点的三个点，是Move语言的精髓所在，这三个方面如下：
->- Struct
->- Ability
->- Generic
-### helloWorld 代码示例
->&emsp;&emsp;在这段代码中包含了进阶中的三个方面Struct、Ability和Generic。
-```move
-address 0x2{
-    module HelloWorld{
-        use 0x1::Signer;
-        use 0x1::Event;
-        struct AnyWordEvent has drop,store {
-            words:vector<u8>,
-        }
+# Move语言三大精髓与NFT合约
+>智能合约编程语言，虚拟机，以及合约标准库是去中心化金融基础设施的核心部分，如何安全、便捷的在智能合约中表达资产，是区块链智能合约领域一直在研究的方向。   
+Starcoin 选择面向数字资产的智能编程语言，以及虚拟机，并提供了丰富的合约标准库。   
+Move 编程语言最早出现在 Facebook 的 Diem 区块链项目中，作为一种面向数字资产的智能合约编程语言，Move 具有 Resource 作为一等公民、灵活、安全、可验证等特性。这些特性和 Starcoin 的智能合约编程语言设计理念极为契合，因此 Starcoin 选择 Move 做为其智能合约的首选编程语言。  
+Move语言具有其他区块链语言不具备的特点，利用这些特点可以简单、高效、安全的生成合约代码，快速有效的开发全新的区块链应用。  
 
-        struct EventHolder has key{
-            any_word_events:Event::EventHandle<AnyWordEvent>,
-        }
-
-        public (script) fun hello_world(account: &signer) acquires EventHolder {
-            let addr = Signer::address_of(account);
-            let hello_world = x"68656c6c6f20776f726c64";  // hello world
-            let holder = borrow_global_mut<EventHolder>(addr);
-            Event::emit_event<AnyWordEvent>(&mut holder.any_word_events, AnyWordEvent{words:hello_world});
-        }
-    }
-}
-```
-上段代码:
-- struct AnyWordEvent 是带有 drop，store Ability能力的Struct
-- struct EventHolder &emsp;是带有 key Ability能力的Struct
-- 在Move中没有string类型保存字符串，但是可以将字符串序列化为二进制后存入vector\<u8\>
-## 一、Move的三大精髓
+![区块链](./img/区块链图2.jpg)
+## Move语言的三大精髓
 ### 1. Struct
->&emsp;&emsp;**struct**是**实现自定义类型的唯一方法**。在Struct 中可以包含Move的原始数据类型bool、address、u8等，也可以包含**其他的Struct类型**。Struct采用**struct**作为关键字。  
+>&emsp;&emsp;Move语言在语法上简洁明了，在内置支持的类型上比较精简，但不因此失去灵活性，可以通过Struct 的特性，创建自定义的类型，它既可以可以包含复杂的数据，也可以不包含任何数据。Struct类似其他编程语言中的结构体，可以通过key-value的形式定义字段并存储内容。由此我们可以方便的通过Struct创建自己的NFT、Token以及其他的数据类型。  
+#### (1)Struct 演示
+>&emsp;&emsp;可以用一段代码来演示Struct，分别创建两个Struct：Empty和MyStruct，Empty为空，MyStruct包含多个基本类型和几个自定义的Struct类型：STC、Empty。
 
-#### (1)Struct 创建示例代码
->&emsp;&emsp;使用struct 关键字在模块中创建两个Struct
 ```move
-address 0x2 {
-    module StructExample1 {
-        use 0x1::STC::STC;
-
-        struct Empty{}
-
-        struct MyStruct {
-            address_field: address,
-            bool_field: bool,
-            u64_field: u64,
-            vec_field: vector<u8>,
-            inner_field: Empty,
-            coins: STC,
-        }
-    }
-}
+1    address 0x2 {
+2        module StructExample1 {
+3            use 0x1::STC::STC;
+4
+5            struct Empty{}
+6
+7            struct MyStruct {
+8                address_field: address,
+9                bool_field: bool,
+10                u64_field: u64,
+11                vec_field: vector<u8>,
+12                inner_field: Empty,
+13                coins: STC,
+14            }
+15        }
+16    }
 ```
-上段代码:   
-- 在&emsp;**0x2**&emsp;地址下创建&emsp;**StructExample1**&emsp;模块  
-- 在模块中创建两个&emsp;Struct&emsp;分别为&emsp;**Empty**&emsp;和&emsp;**MyStruct**&emsp;  
-- **Empty**&emsp;为空，在&emsp;**MyStruct**&emsp;中包含6个变量，它们的类型有Move的自带类型bool、address、u64也有自定义的Struct类型**Empty**
-#### (2)Struct 应用示例代码
->&emsp;&emsp;使用struct关键字在模块中创建两个Struct,并通过模块中的函数来操作Struct的创建或销毁。
+#### (2)Struct与Function的配合
+>&emsp;&emsp;在自定义类型的时候，大多使用的情况是做存储的单元，这时就需要使用有效的手段来操作Struct，在Move中可以使用Function对Struct进行操作，比如创建一个NFT的Struct后，通过函数来打造、转移、销毁NFT等等。可以使用代码来展示如何操作Struct的创建与销毁。在这段代码里两个Strcut都有各自的创建和销毁函数，对于Struct中的自定义类型的创建与销毁需要遵循自定义类型的设计进行操作。
 ```move
-address 0x2 {
-    module StructExample2 {
-        use 0x1::STC::STC;
-        use 0x1::Vector;
-        use 0x1::Token::{Self, Token};
-
-        struct Empty{}
-
-        struct MyStruct {
-            address_field: address,
-            bool_field: bool,
-            u64_field: u64,
-            vec_field: vector<u8>,
-            inner_field: Empty,
-            coins: Token<STC>,
-        }
-
-        fun new_empty() : Empty {
-            Empty {}
-        }
-
-        fun destroy_empty(empty: Empty) {
-            let Empty{} = empty;
-        }
-
-        public fun new_struct() : MyStruct {
-            MyStruct {
-                address_field: 0x1,
-                bool_field: true,
-                u64_field: 1000000,
-                vec_field: Vector::empty(),
-                inner_field: Self::new_empty(),
-                coins: Token::zero<STC>(),
-            }
-        }
-
-        public fun destroy_struct(my: MyStruct) {
-            let MyStruct {
-                address_field: _,
-                bool_field: _,
-                u64_field: _,
-                vec_field: _,
-                inner_field: empty,
-                coins: coins,
-            } = my;
-
-            Self::destroy_empty(empty);
-            Token::destroy_zero(coins);
-        }
-    }
-}
+1    address 0x2 {
+2        module StructExample2 {
+3            use 0x1::STC::STC;
+4            use 0x1::Vector;
+5            use 0x1::Token::{Self, Token};
+6    
+7            struct Empty{}
+8    
+9            struct MyStruct {
+10                address_field: address,
+11                bool_field: bool,
+12                u64_field: u64,
+13                vec_field: vector<u8>,
+14                inner_field: Empty,
+15                coins: Token<STC>,
+16            }
+17    
+18            fun new_empty() : Empty {
+19                Empty {}
+20            }
+21    
+22            fun destroy_empty(empty: Empty) {
+23                let Empty{} = empty;
+24            }
+25    
+26            public fun new_struct() : MyStruct {
+27                MyStruct {
+28                    address_field: 0x1,
+29                    bool_field: true,
+30                    u64_field: 1000000,
+31                    vec_field: Vector::empty(),
+32                    inner_field: Self::new_empty(),
+33                    coins: Token::zero<STC>(),
+34                }
+35            }
+36    
+37            public fun destroy_struct(my: MyStruct) {
+38                let MyStruct {
+39                    address_field: _,
+40                    bool_field: _,
+41                    u64_field: _,
+42                    vec_field: _,
+43                    inner_field: empty,
+44                    coins: coins,
+45                } = my;
+46    
+47                Self::destroy_empty(empty);
+48                Token::destroy_zero(coins);
+49            }
+50        }
+51    }
 ```
-上段代码:   
-- 在上个示例的基础上增加了两个Struct的创建和销毁函数
-- new_empty() 函数是Empty的创建函数，由于函数没有加public修饰符所以，这个函数是在当前module的私有函数，即不能通过直接调用new_empty()来创建Empty。
-- destroy_empty() 函数是Empty的销毁函数，由于函数没有加public修饰符，所以这个函数是在当前module的私有函数，即不能通过直接调用destroy_empty()来销毁Empty。
-- new_struct() 函数是MyStruct的创建函数，由于有public修饰符，所以可以在模块外使用，在其中一项成员使用的是Empty，所以需要调用new_empty来创建
-- destroy_struct() 函数是MyStruct的销毁函数，由于有public修饰符，所以可以在模块外使用，在其中一项成员使用的是Empty，所以需要调用destroy_empty来销毁
-####  (3)Struct、Function和Moudle的关系
->&emsp;&emsp;Module像是整个的工厂，可以生成销毁内部的Struct，Struct 像是原料，Function是操作原料的工具，可以在工厂(Module)中使用工具(function)来对原料(Struct)进行操控，在module中就可以通过function的组合操作Struct最后产生出不同的instance
+#### Struct、Function和Module的关系
+>&emsp;&emsp;Struct和Function相辅相成，如果缺少了一个,另一个的存在也毫无意义， Module像是整个的工厂，可以创建修改销毁内部的Struct，Struct 像是原料，Function是操作原料的工具，可以在工厂(Module)中使用工具(function)来对原料(Struct)进行操控，最后生成可用的instance。
 
 ![关系图](./img/st_Fun_Mod.png)
-### 2. Ability
->&emsp;&emsp;Move语言可以通过Ability来修饰Struct， 从而控制Struct可用的操作。  
-&emsp;&emsp;比如在Move中，定义资产或者NFT时就可以使用Ability，对于NFT来说，不可以进行复制，所以不能写Copy，从而保证了NFT的安全。对于钱来说,不可以去毁掉它,它只能在每个人手上流通,所以不可以带Drop。  
-&emsp;&emsp;在定义Struct时除了Key,Struct的ability\<= Struct 内部属性的ability。  
 
-Move语言中的Ability有四种：  
+### 2. Ability  
+>&emsp;&emsp;Move语言实现了与rust类似的语法功能，是可靠的强类型区块链编程语言，在类型的权限控制上可以使用Ability特性的限制符，来控制不同类型的功能可以对资产的权限进行细致的控制：
+>- Copy :表示该值是否可以被复制
+>- Drop :表示该值是否可以在作用域结束时可以被丢弃
+>- Key  :表示该值是否可以作为键值对全局状态进行访问
+>- Store  :表示该值是否可以被存储到全局状态   
+
 ![Ability能力](./img/ability.png)
-|能力|描述|
-|----|----|
-|Copy | 资源是否可以被复制|
-|Drop | 资源在作用域结束时可以被丢弃|
-|Key  | 资源是否可以作为键值对全局状态进行访问|
-|Store| 资源可以被存储到全局状态|
 
-
-**定义Struct时与内部的ability关系示例:**  
->&emsp;&emsp;定义一个Struct 内部有两个泛型 ,两个泛型的ability可以大于整体的ability。  
+>&emsp;&emsp;通过在合约中对自定义类型的能力通过Ability进行限制，可以使程序变得简洁又不失安全性，例如定义一个NFT的类型，如果不赋予它Copy的能力，那么就可以保证NFT不能被随意的复制，提升了安全性。相同的概念还可以用钱的概念理解，在钱包中的钱如果可以随便复制、丢弃，就会让钱变得的毫无价值，所以通过对自定义类型的能力赋予，就可以一定程度上防止不安全的情况出现，当然，安全性最重要的影响因素是程序的制作者。
+#### (1)Copy 的演示
+>虽然有一些例子中的Struct不应该被赋予Copy的能力，但是仍然有一部分的Struct需要Copy的能力，例如需要保存通讯录信息的应用就需要通信人的信息需要复制多份进行分发。通过代码可以直观的看到有Copy能力的Struct和没有Copy能力的Struct在功能上的区别。
+>- 定义两个Struct，其中CopyStruct带有Copy能力
+>- 在销毁创建的两个Struct时，由于MoveStruct没有Copy的能力所以被销毁了本体，而CopyStruct在销毁了复制体后，本体依然存在
 ```move
-struct Box<T1:copy + drop,T2:copy + drop + store> has copy,drop{
-    contents_1: T1,
-    contents_2: T2,
-}
+1    address 0x2 {
+2        module AbilityExample2 {
+3            use 0x1::Debug;
+4    
+5            struct CopyStruct has copy {value:u64}
+6            struct MoveStruct {value:u64}
+7    
+8            public fun new_copy_struct() : CopyStruct {
+9                CopyStruct {value:100}
+10            }
+11    
+12            public fun destroy_copy_struct(copy_struct: CopyStruct) {
+13                let CopyStruct{value:_} = copy_struct;
+14            }
+15    
+16            public fun new_move_struct() : MoveStruct {
+17                MoveStruct {value:200}
+18            }
+19    
+20            public fun destroy_move_struct(move_struct: MoveStruct) {
+21                let MoveStruct {value:_} = move_struct;
+22            }
+23    
+24            public fun test() {
+25                let copy_struct = Self::new_copy_struct();
+26                let move_struct = Self::new_move_struct();
+27                Self::destroy_copy_struct(copy copy_struct);
+28                //Self::destroy_move_struct(copy move_struct);
+29                Self::destroy_move_struct(move_struct);
+30                Debug::print(&copy_struct.value);
+31                //Debug::print(&move_struct.value);
+32                Self::destroy_copy_struct(copy_struct);
+33            }
+34        }
+35    }
 ```
-上段代码:
-- T1的ability是copy和drop
-- T2的ability是copy,drop和store
-- Box的ability是copy和drop符合规则
-
-#### (1)Drop
->在原有代码上增加Drop，并在销毁时使用drop能力销毁
-
-**示例代码:**
+#### (2)Drop 的演示
+>&emsp;&emsp;对于普通的类型销毁时可以通过 `"_"` 的方式进行销毁，但是自定义的类型变量在销毁时需要通过销毁函数来进行销毁，Move中的Ability提供了Drop以便自定义类型在销毁时也可以通过 `"_"` 进行销毁。通过代码可以清晰地了解此项能力。
+>- 在销毁MyStruct时，内部的Empty已经被赋予了Drop的能力，在第51行的销毁函数中直接使用`"_"` 对Empty类型的变量进行销毁，而无需调用Empty的销毁函数
 ```move
-address 0x2 {
-module AbilityExample1 {
-    use 0x1::STC::STC;
-    use 0x1::Vector;
-    use 0x1::Token::{Self, Token};
-
-    struct Empty has drop {}
-
-    struct MyStruct {
-        address_field: address,
-        bool_field: bool,
-        u64_field: u64,
-            vec_field: vector<u8>,
-        inner_field: Empty,
-        coins: Token<STC>,
-    }
-
-    fun new_empty() : Empty {
-	    Empty {}
-    }
-
-    fun destroy_empty(empty: Empty) {
-	    let Empty{} = empty;
-    }
-
-    public fun new_struct() : MyStruct {
-        MyStruct {
-            address_field: 0x1,
-                bool_field: true,
-                u64_field: 1000000,
-                vec_field: Vector::empty(),
-                inner_field: Self::new_empty(),
-                coins: Token::zero<STC>(),
-        }
-    }
-
-    public fun destroy_struct(my: MyStruct) {
-        let MyStruct {
-            address_field: _,
-            bool_field: _,
-            u64_field: _,
-            vec_field: _,
-            inner_field: empty,
-            coins: coins,
-        } = my;
-
-        Self::destroy_empty(empty);
-        Token::destroy_zero(coins);
-    }
-
-    public fun destroy_struct_v2(my: MyStruct) {
-        let MyStruct {
-            address_field: _,
-            bool_field: _,
-            u64_field: _,
-            vec_field: _,
-            inner_field: _,
-            coins: coins,
-        } = my;
-
-        Token::destroy_zero(coins);
-    }
-}
-}
+1    address 0x2 {
+2        module AbilityExample1 {
+3            use 0x1::STC::STC;
+4            use 0x1::Vector;
+5            use 0x1::Token::{Self, Token};
+6
+7            struct Empty has drop {}
+8
+9            struct MyStruct {
+10                address_field: address,
+11                bool_field: bool,
+12                u64_field: u64,
+13                    vec_field: vector<u8>,
+14                inner_field: Empty,
+15                coins: Token<STC>,
+16            }
+17
+18            fun new_empty() : Empty {
+19                Empty {}
+20            }
+21
+22            fun destroy_empty(empty: Empty) {
+23                let Empty{} = empty;
+24            }
+25
+26            public fun new_struct() : MyStruct {
+27                MyStruct {
+28                    address_field: 0x1,
+29                        bool_field: true,
+30                        u64_field: 1000000,
+31                        vec_field: Vector::empty(),
+32                        inner_field: Self::new_empty(),
+33                        coins: Token::zero<STC>(),
+34                }
+35            }
+36
+37            public fun destroy_struct(my: MyStruct) {
+38                let MyStruct {
+39                    address_field: _,
+40                    bool_field: _,
+41                    u64_field: _,
+42                    vec_field: _,
+43                    inner_field: empty,
+44                    coins: coins,
+45                } = my;
+46
+47                Self::destroy_empty(empty);
+48                Token::destroy_zero(coins);
+49            }
+50
+51            public fun destroy_struct_v2(my: MyStruct) {
+52                let MyStruct {
+53                    address_field: _,
+54                    bool_field: _,
+55                    u64_field: _,
+56                    vec_field: _,
+57                    inner_field: _,
+58                    coins: coins,
+59                } = my;
+60
+61                Token::destroy_zero(coins);
+62            }
+63        }
+64    }
 ```
-上段代码: 
-- 在之前例子的代码中添加了destroy_struct_v2()函数用来销毁Struct
-- 在Empty里增加了Drop能力,所以在销毁时可以使用 "_"的方式直接销毁无需调用destroy_empty()
-
-#### (2)Copy
->&emsp;&emsp;创建两个Struct ，一个带有Copy能力，另一个不带，检测它们的区别
-
-**示例代码:**
-
-```move
-address 0x2 {
-    module AbilityExample2 {
-        use 0x1::Debug;
-
-        struct CopyStruct has copy {value:u64}
-        struct MoveStruct {value:u64}
-
-        public fun new_copy_struct() : CopyStruct {
-            CopyStruct {value:100}
-        }
-
-        public fun destroy_copy_struct(copy_struct: CopyStruct) {
-            let CopyStruct{value:_} = copy_struct;
-        }
-
-        public fun new_move_struct() : MoveStruct {
-            MoveStruct {value:200}
-        }
-
-        public fun destroy_move_struct(move_struct: MoveStruct) {
-            let MoveStruct {value:_} = move_struct;
-        }
-
-        public fun test() {
-            let copy_struct = Self::new_copy_struct();
-            let move_struct = Self::new_move_struct();
-            Self::destroy_copy_struct(copy copy_struct);
-            //Self::destroy_move_struct(copy move_struct);
-            Self::destroy_move_struct(move_struct);
-            Debug::print(&copy_struct.value);
-            //Debug::print(&move_struct.value);
-            Self::destroy_copy_struct(copy_struct);
-        }
-    }
-}
-```
-上段代码: 
-- 新创建了两个Struct CopyStruct和MoveStruct，其中CopyStruct有copy能力
-- 分别创建这两个Struct的创建和销毁函数
-- 销毁copy_struct的复制时代码可以执行，在销毁move_struct的复制时代码出错，move_struct不能被复制
-- 因为销毁的是copy_struct的复制，所以依然打印copy_struct的值
-- 但是move_struct本体已经销毁，所以不能打印move_struct的值
 
 ### 3. Generic
-#### (1)Struct泛型
->泛型可以增加代码的灵活度，可以使不同的类型有统一的处理方法，可以让代码量减小。
+>&emsp;&emsp;编写其他合约语言代码时，对于不同类型可能进行相同的处理时需要大量编写类似的代码，做了许多重复性工作，又例如为创建一个通用的框架时，需要处理不同的类型，又需要大量重复类似的代码。Move语言在设计时通过Generic特性处理大量重复性工作，Generic类似其他编程语言中的泛型编程，可以实现通过单个函数的编写，应用于多种类型的功能，可以大幅度减少代码的重复性，提高编码效率，同时减少代码逻辑清晰更容易检查到错误的出现，避免上线后的损失。
+
+#### (1)Struct 泛型的演示
+
+>&emsp;&emsp;通过Struct创建泛型可以让一个Struct同时支持多种的内部类型，当需要使用u8、u64等类型时就不需要重复Struct。  
 
 比如定义一个Box里面存有u64类型的变量：
 ```move
@@ -291,18 +228,18 @@ struct Box{
 struct Box{
     value:u8
 }
-```
-这样可以，但是没有必要，算法和数据结构需要写很多遍。这时就可以通过Generic来解决  
-只需要定义一个带有Struct泛型的Box:
+
+**只需要定义一个带有Struct泛型的Box:**
+>只需要传入泛型就可以完成 Box<u8> 和 Box<u64>
 ```move
 struct Box<T>{
     value:T
 }
 ```
-在使用时通过指定T的类型就可以创建Box。
-
 #### (2)Struct泛型+Ability
->可以在泛型中使用Ability,用来精准编写合约逻辑。
+>如果使用了泛型，也可以同时使用Ability，使在使用泛型的后仍旧不失去安全性。
+
+>这段代码展示了使用泛型的Box的定义，可以传入泛型生成实际的Struct ，传入的类型也可以加上Ability进行限制，以便精准的操控各个数据类型的能力，大大提升了灵活性，这也是Move语言适合新时代区块链NFT的重要特性。
 **代码示例:**
 ```move
 struct Box<T1:copy + drop ,T2:copy + drop + store> has copy,drop{
@@ -310,42 +247,66 @@ struct Box<T1:copy + drop ,T2:copy + drop + store> has copy,drop{
     contents_2: T2,
 }
 ```
-- 多种Ability 用 "+" 
-- Move的泛型的类型名不重要，顺序重要
-
 #### (3)Struct泛型+Ability+Function
->当Struct使用泛型的时候，操作该Struct的Function也需要使用泛型。
+>通过Struct、泛型和Ability的结合，再通过Function就可以实现通过这两个特性的结合，编写NFT通用框架，可以实现不可随意复制的，自定义任意类型的NFT铸造交易销毁等功能。
+
+>在这段代码中通过函数创建Box时需要指定泛型，可以在函数中直接指定，也可以通过传参方式传入泛型，有多个泛型参数时也可以传入单个泛型，剩余在函数中指定。通过Struct泛型+Ability+Function的有机结合，可以让Move语言的合约有着极为强大的灵活性与安全性，借助这些功能可以轻松地移植其他区块链项目，实现快速上线、安全上线。
 **代码示例:**
 ```move
-address 0x2{
-    module Box2{
-
-        struct Box<T1:copy + drop, T2:copy + drop + store> has copy,drop {
-            contents_1: T1,
-            contents_2: T2,
-        }
-
-
-        fun create_box<T1:copy + drop, T2:copy + drop + store>(val_1:T1, val_2:T2):Box<T1, T2> {
-            Box {contents_1:val_1, contents_2:val_2}
-        }
-
-        public(script) fun create_bool_box<T2:copy + drop + store>(val_2:T2) {
-            let _ = Self::create_box<bool, T2>(false, val_2);
-        }
-
-        public(script) fun create_bool_u64_box() {
-            let _ = Self::create_box<bool, u64>(false, 100);
-        }
-    }
-}
+1    address 0x2{
+2        module Box2{
+3        
+4            struct Box<T1:copy + drop, T2:copy + drop + store> has copy,drop {
+5                contents_1: T1,
+6                contents_2: T2,
+7            }
+8    
+9    
+10            fun create_box<T1:copy + drop, T2:copy + drop + store>(val_1:T1,    val_2:T2):Box<T1, T2> {
+11                Box {contents_1:val_1, contents_2:val_2}
+12            }
+13    
+14            public(script) fun create_bool_box<T2:copy + drop + store>(val_2:T2) {
+15                let _ = Self::create_box<bool, T2>(false, val_2);
+16            }
+17    
+18            public(script) fun create_bool_u64_box() {
+19                let _ = Self::create_box<bool, u64>(false, 100);
+20            }
+21        }
+22    }
 ```
-上段代码:
-- Function在操作有泛型的Struct时，可以由调用者传入泛型也可以在内部指定泛型
-
+## 使用Move语言特性的 helloWorld 代码示例
+>&emsp;&emsp;Move语言的三大精髓通过代码可以更为直观的展现出来，这段代码可以打印hello world字符串，但是在Move没有String类型，所以第15行通过hello world的16进制来输出字符。在这段代码中使用了Move的三个特性分别为：
+>- 第5行和第9行通过Strcut定义了自定义类型的AnyWordEvent和EventHolder  
+>- 第5行和第9行通过Ability修饰了两个自定义类型  
+>- 在第16行使用Generic传入EventHolder类型来调用borrow_global_mut函数
+```move
+1    address 0x2{
+2        module HelloWorld{
+3            use 0x1::Signer;
+4            use 0x1::Event;
+5            struct AnyWordEvent has drop,store {
+6                words:vector<u8>,
+7            }
+8
+9            struct EventHolder has key{
+10                any_word_events:Event::EventHandle<AnyWordEvent>,
+11            }
+12
+13            public (script) fun hello_world(account: &signer) acquires EventHolder {
+14                let addr = Signer::address_of(account);
+15                let hello_world = x"68656c6c6f20776f726c64";  // hello world
+16                let holder = borrow_global_mut<EventHolder>(addr);
+17                Event::emit_event<AnyWordEvent>(&mut holder.any_word_events, AnyWordEvent{words:hello_world});
+18            }
+19        }
+20    }
+```
+![区块链](./img/区块链图3.jpeg)
 ## 二、常用合约
 ### 1. Vector
->Vector是在标准库中的一个Module,作用可以理解为C++中的Vector。
+>Vector是在标准库中的一个Module,作用可以理解为C++中的Vector，可以使用Vector来实现NFT陈列室功能，保存所有的NFT在自己的账户下，可以方便的进行查看和管理，也可以使用它存入自定义的其他类型的Struct。
 
 **常用函数：** 
 
@@ -361,7 +322,7 @@ address 0x2{
 |public fun remove\<Element\>(v: &mut vector\<Element\>,i:u64):Element;|删除vector中指定位置的元素|
 
 ### 2. Event
->Event 是标准库中的一个Module  
+>Event 是标准库中的一个Module，作用是可以通知钱包，使钱包可以通知用户或在前端做其他的一些应用，例如NFT交易时，可以通知购买者已经收到NFT等等。  
 
 **常用函数:**
 
@@ -371,7 +332,7 @@ address 0x2{
 |public fun emit_event\<T: drop + store\>(handle_ref: &mut EventHandle\<T\>,msg: T):{} |发送Event|
 
 ### 3. Error
->当区块链执行判断出错时中断合约
+>当区块链执行判断出错时中断合约，在编码过程中如果数值不符合预期可以通过这种方式进行判断，并返回错误代码，错误代码可以展示在区块链的回复消息中，以便前端进行判断并反馈用户。例如：购买NFT时，输入的金额小于NFT的价格时可以通过assert判断大小并退出程序，来保证交易安全可靠。
 
 **常用:**
 |函数|描述|
@@ -379,71 +340,75 @@ address 0x2{
 |assert(false,1000)|第一个参数判断为真时可以执行后续，为假则退出并发送错误码|
 |abort(10000)|直接退出，并发送错误码|
 
+![NFT图](./img/NFT图.jpeg)
+
 ## 三、NFT协议
+>NFT的全称是Non-Fungible Tokens，中文常被翻译成`"不可同质化代币/不可替代代币"`，它定义了一种生态中不可分割的、具有唯一性的代币交互和流通的接口规范。对于同质化货币Fungible Token 就是常见的各种Token，例如：BTC、ETH、STC等等，同质化货币的每一个币都可以被拆分，每个币没有他的编号，像是日常生活中的钢镚1元、5毛等，上面没有固定的编号只有通用的面值。而NFT一般来说是不可拆分的，每个NFT都有它的固定编号来标识它，可以理解为纸币，上面有编号，虽然面值相同但是编号不会相同。
+
+例如：下面这个gif就是价值50美元的Nyan Cat
+![50万美元的《 Nyan Cat（彩虹猫）》](./img/NFT1.gif)
 ### 1.NFT协议 V1
+>在这段代码中实现了NFT的初始化和铸造，在第6行和第8行分别创建自己的NFT和NFT列表用来存放NFT，在第12行初始化NFT的列表以便可以接收和保存NFT，在第16行的铸造NFT函数中先判断是否可以接收NFT，如果不能则通过assert的判断直接退出并返回错误代码
 ```move
-address 0x2 {
-    module NFTExample1 {
-        use 0x1::Signer;
-        use 0x1::Vector;
-
-        struct NFT has key, store { name: vector<u8> }
-
-        struct UniqIdList has key, store {
-            data: vector<vector<u8>>
-        }
-
-        public fun initialize(account: &signer) {
-            move_to(account, UniqIdList {data: Vector::empty<vector<u8>>()});
-        }
-
-        public fun new(account: &signer, name: vector<u8>): NFT acquires UniqIdList {
-            let account_address = Signer::address_of(account);
-            let exist = Vector::contains<vector<u8>>(&borrow_global<UniqIdList>(account_address).data, &name);
-            assert(!exist, 1);
-            let id_list = borrow_global_mut<UniqIdList>(account_address);
-            Vector::push_back<vector<u8>>(&mut id_list.data, copy name);
-            NFT { name }
-        }
-    }
-}
+1    address 0x2 {
+2        module NFTExample1 {
+3            use 0x1::Signer;
+4            use 0x1::Vector;
+5    
+6            struct NFT has key, store { name: vector<u8> }
+7    
+8            struct UniqIdList has key, store {
+9                data: vector<vector<u8>>
+10            }
+11    
+12            public fun initialize(account: &signer) {
+13                move_to(account, UniqIdList {data: Vector::empty<vector<u8>>()});
+14            }
+15    
+16            public fun new(account: &signer, name: vector<u8>): NFT acquires UniqIdList {
+17                let account_address = Signer::address_of(account);
+18                let exist = Vector::contains<vector<u8>>(&borrow_global<UniqIdList>(account_address).data, &name);
+19                assert(!exist, 1);
+20                let id_list = borrow_global_mut<UniqIdList>(account_address);
+21                Vector::push_back<vector<u8>>(&mut id_list.data, copy name);
+22                NFT { name }
+23            }
+24        }
+25    }
 ```
-上段代码：
-- 在new函数中先检查NFT的名称是否被注册，如果注册了，则退出，未注册则可以继续注册
-- 但是在该版本中没有销毁，不能进行销毁或删除
 
 ### 2. NFT协议 V2
+>通过Strcut可创建自己的NFT，但是如果需要创建其他类型的NFT就需要重新写代码，所以可以使用泛型编程的思想来重新构建NFT代码，在6行和8行定义带有泛型的NFT和NFT列表，在第12行定义初始化vector`<u8>`类型的NFT列表，在16行的函数的返回值和内部调用函数时使用的都是带有泛型的struct和函数，现在这个代码可以称作不完全的NFT框架，可以适合小范围测试的多个NFT。
 ```move
-address 0x2 {
-    module NFTExample2 {
-        use 0x1::Signer;
-        use 0x1::Vector;
-
-        struct NFT<T: store> has key, store { name: T }
-
-        struct UniqIdList<T: store> has key, store {
-            data: vector<T>
-        }
-
-        public fun initialize(account: &signer) {
-            move_to(account, UniqIdList {data: Vector::empty<vector<u8>>()});
-        }
-
-        public fun new(account: &signer, name: vector<u8>): NFT<vector<u8>> acquires UniqIdList {
-            let account_address = Signer::address_of(account);
-            let exist = Vector::contains<vector<u8>>(&borrow_global<UniqIdList<vector<u8>>>(account_address).data, &name);
-            assert(!exist, 1);
-            let id_list = borrow_global_mut<UniqIdList<vector<u8>>>(account_address);
-            Vector::push_back<vector<u8>>(&mut id_list.data, copy name);
-            NFT { name }
-        }
-    }
-}
+1    address 0x2 {
+2        module NFTExample2 {
+3            use 0x1::Signer;
+4            use 0x1::Vector;
+5    
+6            struct NFT<T: store> has key, store { name: T }
+7    
+8            struct UniqIdList<T: store> has key, store {
+9                data: vector<T>
+10            }
+11    
+12            public fun initialize(account: &signer) {
+13                move_to(account, UniqIdList {data: Vector::empty<vector<u8>>()});
+14            }
+15    
+16            public fun new(account: &signer, name: vector<u8>): NFT<vector<u8>> acquires UniqIdList {
+17                let account_address = Signer::address_of(account);
+18                let exist = Vector::contains<vector<u8>>(&borrow_global<UniqIdList<vector<u8>>> (account_address).data, &name);
+19                assert(!exist, 1);
+20                let id_list = borrow_global_mut<UniqIdList<vector<u8>>>(account_address);
+21                Vector::push_back<vector<u8>>(&mut id_list.data, copy name);
+22                NFT { name }
+23            }
+24        }
+25    }
 ```
-上段代码：
-- 在NFT的Struct和UniqIdList增加泛型
 
 ### 3.NFT协议V3
+>在上段代码中的new函数和initialize函数没有使用泛型参数，如果需要完成NFT的框架，就需要对这两个函数进行修改，在以下代码中把new函数和initialize函数也使用泛型进行修饰，使该NFT协议的灵活性大大提升，可以试用于多种不同的NFT测试。
 ```move
 address 0x2 {
     module NFTExample3 {
@@ -471,9 +436,8 @@ address 0x2 {
     }
 }
 ```
-上段代码：
-- 在new()函数中也增加泛型
 ### 4.NFT协议V4
+>通过对NFT协议的完善，可以在协议中增加Event，用来增加通知的功能可以在钱包中通知NFT的铸造通知。
 ```move
 address 0x2 {
     module NFTExample4 {
@@ -507,9 +471,11 @@ address 0x2 {
     }
 }
 ```
-上段代码：
-- 使用NFTEvent事件，事件的Struct必须要有drop和store能力。
+
+![区块链](./img/区块链图4.jpeg)
+
 ## 四、问答环节
+>在Starcoin的社区中有许多的开发者或关注者也在提出各种各样的问题，对于这些问题也有可靠的回答。
 1. 投票时候币只有WithdrawEvent但是没有DepositEvent，这和老师刚讲的钱只能move有什么区别呢？ 是move到vote合约的意思吗？
 - 答：对，Move的语义就是转移，在投票时所投的Token就是通过Move转移到投票合约中
 2. move上有类似ERC20这样的标准吗
