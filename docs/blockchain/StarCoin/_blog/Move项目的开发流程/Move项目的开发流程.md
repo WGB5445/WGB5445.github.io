@@ -1,12 +1,15 @@
 # Move项目的开发实战
->Move 编程语言最早出现在 Facebook 的 Diem 区块链项目中，它是面向数字资产的智能合约语言，Move具有多种特性，涉及安全、开发效率等方面。
->如果想要要完整的开发一个Move语言的项目，自认要了解Move项目的开发流程，相对于其他语言的项目来说，Move语言的基本流程都比较相似，都有开发、单元测试、集成测试、本地发布与调用、链上部署与调用等等。但由于合约编程语言的不同，开发工具与每一项具体步骤也不同，所以对于希望开发Move项目和希望了解Move语言开发的开发者或关注者来说，可以通过本篇《Move项目的开发实战》来了解和熟悉Move项目的开发，需要注意Move语言的开发暂时需要使用类unix系统进行开发，推荐使用MacOS或者ubuntu20.04进行开发。如果没有Mac，可以使用虚拟机下的ubuntu进行开发。
+>&emsp;&emsp;Move 编程语言最早出现在 Facebook 的 Diem 区块链项目中，它是面向数字资产的智能合约语言，Move具有多种特性，涉及安全、开发效率等方面。  
+>&emsp;&emsp;如果想要要完整的开发一个Move语言的项目，自认要了解Move项目的开发流程，相对于其他语言的项目来说，Move语言的基本流程都比较相似，都有开发、单元测试、集成测试、本地发布与调用、链上部署与调用等等。但由于合约编程语言的不同，开发工具与每一项具体步骤也不同，所以对于希望开发Move项目和希望了解Move语言开发的开发者或关注者来说，可以通过本篇《Move项目的开发实战》来了解和熟悉Move项目的开发，需要注意Move语言的开发暂时需要使用类unix系统进行开发，推荐使用MacOS或者ubuntu20.04进行开发。如果没有Mac，可以使用虚拟机下的ubuntu进行开发。  
+
 ## 一、新建Move项目
->&emsp;&emsp;开发项目的第一个步骤就是创建一个新的项目，这个过程可以自己创建项目的树状目录，也可以通过使用 move-cli 进行创建。move-cli是官方推出的一个move的开发工具，有创建、编译、测试等功能，可以从官方的[github](https://github.com/starcoinorg/starcoin/)下载move-cli，也可以通过下载完整的starcoin包后在解压包内找到move-cli，还可以通过clone后自行编译编译的方式获取。
+>&emsp;&emsp;开发项目的第一个步骤就是创建一个新的项目，这个过程可以自己创建项目的树状目录，也可以通过使用 move-cli 进行创建。move-cli是官方推出的一个move的开发工具，有创建、编译、测试等功能，可以从官方的[github](https://github.com/starcoinorg/starcoin/)下载move-cli，也可以通过下载完整的starcoin包后在解压包内找到move-cli，还可以通过clone后自行编译编译的方式获取。  
+
 **直接下载：**
 ![move-cli示例](./img/move-cli下载.png)
 ### 1. 使用move-cli创建项目
->&emsp;&emsp;在下载好move-cli后，可以通过命令创建新的项目，对于move-cli的其他命令可以通过--help 来查看具体功能，随后我们也会在项目过程中使用它们中的一部分。
+>&emsp;&emsp;在下载好move-cli后，可以通过命令创建新的项目，对于move-cli的其他命令可以通过--help 来查看具体功能，随后我们也会在项目过程中使用它们中的一部分。  
+
 **创建 hello_world 项目**
 ```shell
 move scaffold hello_world
@@ -24,7 +27,8 @@ hello_world/
 
 ## 二、开发与调试
 ### 1. hello world 
->&emsp;&emsp;在创建好目录后就可以在src目录下写脚本和模块，可以在scripts目录中创建一个hello_world.move，并在里面填写代码,代码的含义是在屏幕打印 hello world 的 十进制 ascii 码 vector，这主要是暂时在Move中未支持string类型，这项支持已经在社区中有一些进度，可以等待后续的更新。
+>&emsp;&emsp;在创建好目录后就可以在src目录下写脚本和模块，可以在scripts目录中创建一个hello_world.move，并在里面填写代码,代码的含义是在屏幕打印 hello world 的 十进制 ascii 码 vector，这主要是暂时在Move中未支持string类型，这项支持已经在社区中有一些进度，可以等待后续的更新。  
+
 **hello_world.move**
 ```move
 script {
@@ -268,7 +272,7 @@ script {
 
 ```
 ## 五、合约的本地发布和调用
->代码测试后，可以通过move-cli去部署代码，因为在链上部署调用对于测试开发环境比较麻烦，所以优先本地测试调用合约。
+>&emsp;&emsp;代码测试后，可以通过move-cli去部署代码，因为在链上部署调用对于测试开发环境比较麻烦，所以优先本地测试调用合约。
 ### 1.publish 编译并本地部署
 >&emsp;&emsp;通过check检查编译后的代码就可以通过publish编译生成字节码文件，使用move publish 就可以对代码编译字节码，代码编译后的字节码文件默认存放在当前文件夹的storage中。  
 
@@ -282,7 +286,7 @@ script {
 
 ```
 ### 2. 查看字节码文件
->在通过publish编译出module的字节码后，所有的字节码将在storage/0x00000000000000000000000000000002/modules下产生，如果在调用过程中出现异常，可以通过move view  命令来分析字节码查错
+>&emsp;&emsp;在通过publish编译出module的字节码后，所有的字节码将在storage/0x00000000000000000000000000000002/modules下产生，如果在调用过程中出现异常，可以通过move view  命令来分析字节码查错
 ```shell
 执行：
     move view Test.mv
@@ -319,9 +323,9 @@ script {
     }   
 ```
 ### 3. 本地调用
->通过本地的部署后，可以通过写script脚本来调用module代码，以测试和验证module代码
+>&emsp;&emsp;通过本地的部署后，可以通过写script脚本来调用module代码，以测试和验证module代码
 #### (1) 编写脚本代码
->在src/script/下编写publish_resource.move，调用0x2::Test模块下的函数并打印返回值
+>&emsp;&emsp;在src/script/下编写publish_resource.move，调用0x2::Test模块下的函数并打印返回值
 ```move
 script {
     use 0x2::Test;
@@ -334,7 +338,7 @@ script {
 }
 ```
 #### (2) 执行脚本
->执行脚本以调用Test模块中的函数，在调用时通过move run 调用脚本并指定发起者
+>&emsp;&emsp;执行脚本以调用Test模块中的函数，在调用时通过move run 调用脚本并指定发起者
 ```shell
 执行：
     move run src/scripts/publish_resource.move --signers 0x12345
@@ -342,7 +346,7 @@ script {
     [debug] 10
 ```
 #### (3) view 查看区块链结果
->在本地调用之后，既可以通过区块链方式查看结果，也可以通过move view方式来查看。
+>&emsp;&emsp;在本地调用之后，既可以通过区块链方式查看结果，也可以通过move view方式来查看。
 ```shell
 执行：
     move view storage/0x00000000000000000000000000012345/resources/0x00000000000000000000000000000002::Test::Resource.bcs
@@ -351,3 +355,224 @@ script {
         i: 10
     }   
 ```
+## 六、合约的链上部署和调用
+>&emsp;&emsp;在本地部署测试之后就可以通过dev网络进行链上的部署测试，可以通过starcoin的启动一个dev网络，并使用默认账户进行链上部署和调用合约
+### 1. 启动节点
+```shell
+启动dev节点
+执行：
+    starcoin -n dev console
+结果：
+    starcoin% 
+```
+### 2. 账户管理
+#### (1)查看账户
+>查看账户的地址，方便修改module的address
+```shell
+执行：
+    starcoin% account show
+
+结果：
+    {
+        "ok": {
+            "account": {
+            "address": "0xe1fb7f08be5427c9230e7eea99ce21a7",
+            "is_default": true,
+            "is_readonly": false,
+            "public_key": "0xdaa5325889979bf533659448ebca82a13d379c574fe7e9af0b9e06e70c6d971b",
+            "receipt_identifier": "stc1pu8ah7z972snujgcw0m4fnn3p5ulvfsv9"
+            },
+            "auth_key": "0x31c2ab0ea48eff7623eaa5608d96e4f5e1fb7f08be5427c9230e7eea99ce21a7",
+            "sequence_number": null,
+            "balances": {}
+        }
+    }
+```
+#### (2)获得STC
+>&emsp;&emsp;获得一些STC用作部署和调用的gas费
+```shell
+执行:
+    starcoin% dev get-coin
+
+结果:
+    txn 0x6eb8fa42d3af31b8039529cce0d9e9a241503fe21aa6aae4781da8646f5a7121 submitted.
+    {
+        "ok": {
+            "block_hash": "0x75a1d7e5f18755e3e7c2ccdfe2cc92697db11b3118eb370aeb2e2af98d388d48",
+            "block_number": "4",
+            "transaction_hash": "0x6eb8fa42d3af31b8039529cce0d9e9a241503fe21aa6aae4781da8646f5a7121",
+            "transaction_index": 1,
+            "state_root_hash": "0x0083f680413223e962f9a729468c31ac07e3dc0f1c66cf70187c08f48fd82319",
+            "event_root_hash": "0x1d7c50afb42a986c48027b8d5f32b84e641c88895f67037e068beb397e57e682",
+            "gas_used": "119769",
+            "status": "Executed"
+        }
+    }
+```
+
+#### (3)解锁账户
+>&emsp;&emsp;解锁账户以便交易可以签名发出
+```shell
+执行:
+    starcoin% account unlock
+
+结果:
+    {
+        "ok": {
+            "address": "0xe1fb7f08be5427c9230e7eea99ce21a7",
+            "is_default": true,
+            "is_readonly": false,
+            "public_key": "0xdaa5325889979bf533659448ebca82a13d379c574fe7e9af0b9e06e70c6d971b",
+            "receipt_identifier": "stc1pu8ah7z972snujgcw0m4fnn3p5ulvfsv9"
+        }
+    }
+```
+### 3.修改module模块address
+>&emsp;&emsp;修改address 以便可以在链上部署
+```move
+address 0xe1fb7f08be5427c9230e7eea99ce21a7{
+module Test {
+    use 0x1::Signer;
+
+    struct Resource  has key { i: u64 }
+
+    public fun publish(account: &signer) {
+        move_to(account, Resource { i: 10 })
+    }
+
+    public fun write(account: &signer, i: u64) acquires Resource {
+        borrow_global_mut<Resource>(Signer::address_of(account)).i = i;
+    }
+
+    public fun unpublish(account: &signer) acquires Resource {
+        let Resource { i: _ } = move_from(Signer::address_of(account));
+  }
+    public fun value_of(addr: address):u64 acquires Resource{
+        borrow_global<Resource>(addr).i
+    }
+}
+module TestScript {
+    use 0xe1fb7f08be5427c9230e7eea99ce21a7::Test;
+
+    public (script) fun publish(account: signer) {
+        Test::publish(&account);
+    }
+
+    public (script)fun write(account: signer, i: u64) {
+        Test::write(&account,i);
+    }
+
+    public (script)fun unpublish(account: signer){
+        Test::unpublish(&account);
+    }
+    public (script)fun value_of(addr: address):u64 {
+        Test::value_of(addr)
+    }
+}
+}
+```
+### 4. 编译部署
+#### (1)编译为字节码
+>&emsp;&emsp;部署时需要使用字节码文件部署，所以先编译为字节码文件
+```shell
+执行:
+    move publish
+结果:
+
+```
+#### (2)在dev网络下部署
+>&emsp;&emsp;在dev下部署module的字节码，节省成本方便开发
+```shell
+执行:
+    starcoin% dev deploy /home/wgb/code/starcoin/hello_world/storage/0xe1fb7f08be5427c9230e7eea99ce21a7/modules/Test.mv -b
+    dev deploy /home/wgb/code/starcoin/hello_world/storage/0xe1fb7f08be5427c9230e7eea99ce21a7/modules/TestScript.mv -b
+结果:
+    生成新的区块交易
+```
+### 5. 调用
+#### (1) 调用脚本
+>&emsp;&emsp;调用publish 脚本测试module代码
+```shell
+执行:
+    starcoin% account execute-function --function 0xe1fb7f08be5427c9230e7eea99ce21a7::TestScript::publish
+结果:
+    生成新的交易
+```
+#### (2) 查看资源
+>&emsp;&emsp;在执行脚本后可以查看资源是否已经被创建，用来验证脚本和module的可用性
+```shell
+执行:
+    starcoin% state get resource 0xe1fb7f08be5427c9230e7eea99ce21a7 0xe1fb7f08be5427c9230e7eea99ce21a7::Test::Resource
+结果:
+    {
+        "ok": {
+                "raw": "0x0a00000000000000",
+                "json": {
+                "i": 10
+            }
+        }
+    }
+```
+#### (3) 调用带参数的脚本
+>&emsp;&emsp;可以通过带参数的脚本对资源进行修改，以修改链上的状态
+```shell
+执行:
+    starcoin% account execute-function --function 0xe1fb7f08be5427c9230e7eea99ce21a7::TestScript::write --arg 20u64
+结果:
+    生成新的交易
+```
+#### (4) 查看修改后的资源
+>&emsp;&emsp;通过查看资源的变化来测试修改的效果
+```shell
+执行:
+    starcoin% state get resource 0xe1fb7f08be5427c9230e7eea99ce21a7 0xe1fb7f08be5427c9230e7eea99ce21a7::Test::Resource
+结果:
+    {
+        "ok": {
+                "raw": "0x0a00000000000000",
+                "json": {
+                "i": 20
+            }
+        }
+    }
+```
+## 七、常见的错误
+>&emsp;&emsp;在整个项目开发的过程中基本都会遇到一些错误，他们可能发生在编译中，在执行时等等，可以对这些错误进行分类，以便能更好的处理这些问题
+### 1. 编译期错误
+>&emsp;&emsp;在编写代码时，可能由于疏忽会出现一些语法问题、引用问题,这些问题都是在编译期存在的问题，可以通过move check检测出来。  
+
+错误示例：
+>- 语法错误
+>- 类型错误
+>- acquire 错误
+>- 引用错误
+
+### 2. 链接时错误
+>&emsp;&emsp;在部署和publish时可能出现链接错误，这些问题大多不会遇到，通过设置依赖、或合约sender等可以解决。  
+
+错误示例：
+- 引用module 不存在
+- 引用的 function 参数不匹配
+- 合约 sender 不匹配
+
+### 3. 运行时错误
+>&emsp;&emsp;运行时的错误是在链上执行时的错误，这些问题需要在编码时做出全面的判断，或者在dev测试时发现问题后及时修补代码等。  
+
+错误示例：
+- 合约中 abort 
+- gas 费不够
+- 交易序列号过期
+- 交易过期
+- 参数类型不匹配
+
+
+# Q & A
+>对Move语言的开发，社区的反响也比较强烈，开发者和关注者也提出了一些问题，在此对这些问题进行解答
+1. 已经部署到链上的合约怎样进行更新？
+- 对于接口没有变动的合约可以进行直接更新，也可以托管到Dao模块中，通过自发行的Token进行去中心化治理 ，还可以通过设置合约的不可更新让合约固定版本
+2. 怎么通过 指定seed 链接区块链？
+- 可以通过starcoin --help 查看 seed的用法，就可以通过指定seed
+3. 调用线上module 必须要使用高度么？
+- 是的，必须要指定高度，必须从那个高度分叉出来
+4. 现在的move有合约模板么？
+- 现在move的生态还比较早期，所以合约较少，需要大家和社区的努力
