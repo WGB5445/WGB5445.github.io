@@ -16,12 +16,15 @@ move scaffold hello_world
 ```
 **创建的目录结构：**
 ```shell
-hello_world/
-├── args.txt
-├── src
-│   ├── modules
-│   └── scripts
-└── tests
+执行:
+    tree hello_world
+结果:
+    hello_world/
+    ├── args.txt
+    ├── src
+    │   ├── modules
+    │   └── scripts
+    └── tests
 ```
 - src下的modules存放的就是要写的合约代码，scripts存放的是写的脚本代码
 
@@ -29,7 +32,9 @@ hello_world/
 ### 1. hello world 
 >&emsp;&emsp;在创建好目录后就可以在src目录下写脚本和模块，可以在scripts目录中创建一个hello_world.move，并在里面填写代码,代码的含义是在屏幕打印 hello world 的 十进制 ascii 码 vector，这主要是暂时在Move中未支持string类型，这项支持已经在社区中有一些进度，可以等待后续的更新。  
 
-**hello_world.move**
+
+
+#### (1) hello_world.move
 ```move
 script {
         use 0x1::Debug;
@@ -38,13 +43,20 @@ script {
         }
 }
 ```
-**执行验证:**
+**代码示例：**  
+![编写脚本](./img/hello_world_move.png)
+
+#### (2)执行验证
 ```shell
 执行：
     move run src/scripts/hello_world.move 
 结果：
     [debug] (&) [104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]
 ```
+
+**执行示例：**  
+![执行脚本](./img/执行_hello_world_move.png)
+
 
 ### 2. 编译
 >&emsp;&emsp;在上一小节的hello world 中使用的是script脚本的方式，但是在Move合约项目中的核心还是module模块，通过module模块中的函数和脚本组合可以实现多种多样的功能。通过对模块的编译，可以将模块部署到区块链中使用，在编译之前也可以通过check功能进行语法检查，以便减少开发中遗漏的问题。  
@@ -89,14 +101,20 @@ module Test {
 结果：
     
 ```
+**执行本地check示例:**  
+![本地check](./img/本地check.png)  
+
 **链上check：**
 ```shell   
-move check  —mode starcoin \
-            —starcoin-rpc http://main.seed.starcoin.org:9850 \
-            —block-number 1000000 \
+move check  \
+            --mode starcoin \
+            --starcoin-rpc http://main.seed.starcoin.org:9850 \
+            --block-number 1000000 \
             src/modules/Test.move
-```
 
+```
+**执行链上check示例:**  
+![链上check](./img/链上check.png)  
 
 ## 三、单元测试
 >&emsp;&emsp;在Move开发过程中通过check检查没有语法错误后，依然不能掉以轻心，因为代码中的错误不只有语法错误，更多的是业务逻辑的错误和代码编写中的逻辑错误，对于这些错误，可以使用功能强大的单元测试来针对小范围的代码进行测试。  
@@ -160,6 +178,9 @@ module MyModule {
     [ PASS    ] 0x2::MyModule::test_has_coin
     Test result: OK. Total tests: 3; passed: 3; failed: 0
 ```
+**测试结果：**  
+![单元测试](./img/单元测试.png)
+
 #### (2)查看测试项
 
 ```shell
@@ -170,6 +191,9 @@ module MyModule {
     0x2::MyModule::make_sure_zero_coin_fails: test
     0x2::MyModule::test_has_coin: test
 ```
+**测试结果：**  
+![查看单元测试项](./img/查看单元测试项.png)
+
 #### (3)带有统计的单元测试
 ```shell
 执行：
@@ -193,6 +217,9 @@ module MyModule {
     └───────────────────────────────────────────────┴────────────┴───────────────────────────┘
 
 ```
+**测试结果：**  
+![带统计的单元测试](./img/带统计的单元测试.png)
+
 
 ## 四、功能（集成）测试
 >&emsp;&emsp;单元测试只适用于小范围的测试，当整个需要进行复杂测试时，则需要通过功能测试来详细的测试，功能测试相对于单元测试增加了区块链测试，可以通过定义账号、定义区块的生成以及交易的产生等等来测试项目代码。
@@ -285,6 +312,9 @@ script {
 结果：
 
 ```
+**执行结果：**  
+![执行publish](./img/执行publish.png)
+
 ### 2. 查看字节码文件
 >&emsp;&emsp;在通过publish编译出module的字节码后，所有的字节码将在storage/0x00000000000000000000000000000002/modules下产生，如果在调用过程中出现异常，可以通过move view  命令来分析字节码查错
 ```shell
@@ -322,6 +352,9 @@ script {
         }
     }   
 ```
+**查看字节码的部分结果:**
+![view查看字节码](./img/view查看字节码.png)
+
 ### 3. 本地调用
 >&emsp;&emsp;通过本地的部署后，可以通过写script脚本来调用module代码，以测试和验证module代码
 #### (1) 编写脚本代码
@@ -345,6 +378,9 @@ script {
 结果：
     [debug] 10
 ```
+**执行本地脚本:**  
+![执行本地脚本](./img/执行move本地脚本.png)
+
 #### (3) view 查看区块链结果
 >&emsp;&emsp;在本地调用之后，既可以通过区块链方式查看结果，也可以通过move view方式来查看。
 ```shell
@@ -355,6 +391,9 @@ script {
         i: 10
     }   
 ```
+**查看本地调用的资源:**  
+![view查看本地调用的资源](./img/view查看本地调用的资源.png)
+
 ## 六、合约的链上部署和调用
 >&emsp;&emsp;在本地部署测试之后就可以通过dev网络进行链上的部署测试，可以通过starcoin的启动一个dev网络，并使用默认账户进行链上部署和调用合约
 ### 1. 启动节点
@@ -388,6 +427,8 @@ script {
         }
     }
 ```
+**查看账户结果:**  
+![查看账户结果](./img/查看账户.png)
 #### (2)获得STC
 >&emsp;&emsp;获得一些STC用作部署和调用的gas费
 ```shell
@@ -395,20 +436,22 @@ script {
     starcoin% dev get-coin
 
 结果:
-    txn 0x6eb8fa42d3af31b8039529cce0d9e9a241503fe21aa6aae4781da8646f5a7121 submitted.
+    txn 0x0ee2eca20d4158b390be31f3fecaeac9d177f05d2e3e9ea489c83cc453ee0c20 submitted.
     {
-        "ok": {
-            "block_hash": "0x75a1d7e5f18755e3e7c2ccdfe2cc92697db11b3118eb370aeb2e2af98d388d48",
-            "block_number": "4",
-            "transaction_hash": "0x6eb8fa42d3af31b8039529cce0d9e9a241503fe21aa6aae4781da8646f5a7121",
-            "transaction_index": 1,
-            "state_root_hash": "0x0083f680413223e962f9a729468c31ac07e3dc0f1c66cf70187c08f48fd82319",
-            "event_root_hash": "0x1d7c50afb42a986c48027b8d5f32b84e641c88895f67037e068beb397e57e682",
-            "gas_used": "119769",
-            "status": "Executed"
-        }
+    "ok": {
+        "block_hash": "0x99ffac9baafb80348cd69952de20309c134e84f60316ea16d974b1a8b0c5b85c",
+        "block_number": "7",
+        "transaction_hash": "0x0ee2eca20d4158b390be31f3fecaeac9d177f05d2e3e9ea489c83cc453ee0c20",
+        "transaction_index": 1,
+        "state_root_hash": "0x5f8beedeb725c9dd434b200969aa7820b2c65bd3abda1860c7b4c2d5310f5ac9",
+        "event_root_hash": "0xdba2769b4e1f4c9170a8ad7b27268debfcabba0bf0e998f2d8fd2e78c0faf252",
+        "gas_used": "119769",
+        "status": "Executed"
+    }
     }
 ```
+**获得STC结果：**  
+![获得STC结果](./img/获得stc.png)
 
 #### (3)解锁账户
 >&emsp;&emsp;解锁账户以便交易可以签名发出
@@ -427,6 +470,10 @@ script {
         }
     }
 ```
+**解锁账户结果:**  
+![解锁账户](./img/解锁账户.png)
+
+
 ### 3.修改module模块address
 >&emsp;&emsp;修改address 以便可以在链上部署
 ```move
@@ -513,6 +560,9 @@ module TestScript {
         }
     }
 ```
+**查看链上资源结果：**  
+![查看链上资源](./img/查看view资源.png)
+
 #### (3) 调用带参数的脚本
 >&emsp;&emsp;可以通过带参数的脚本对资源进行修改，以修改链上的状态
 ```shell
@@ -536,6 +586,9 @@ module TestScript {
         }
     }
 ```
+**查看链上资源修改结果：**  
+![查看链上资源修改结果](./img/查看链上资源修改结果.png)
+
 ## 七、常见的错误
 >&emsp;&emsp;在整个项目开发的过程中基本都会遇到一些错误，他们可能发生在编译中，在执行时等等，可以对这些错误进行分类，以便能更好的处理这些问题
 ### 1. 编译期错误
