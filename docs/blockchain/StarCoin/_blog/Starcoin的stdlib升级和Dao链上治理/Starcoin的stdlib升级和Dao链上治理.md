@@ -1,6 +1,10 @@
 ---
 title: Starcoin的stdlib升级和Dao链上治理
 ---
+# Starcoin的stdlib升级和Dao链上治理
+```
+* 本文由Starcoin社区原创 作者:WGB
+```
 # Starcoin
 &emsp;&emsp;Starcoin 与其他币种不同，Starcoin把的共识、区块设置、区块奖励、账号定义、Token定义、NFT协议等预先定义在stdlib中，以便升级维护统一管理。stdlib是存在于链上的合约库，所以starcoin 可以不使用硬编码来实现区块奖励、区块算法、共识等定义，同时stdlib也可以通过Dao链上治理的方式进行升级或修复。
 ## 一、智能合约：Starcoin vs ETH
