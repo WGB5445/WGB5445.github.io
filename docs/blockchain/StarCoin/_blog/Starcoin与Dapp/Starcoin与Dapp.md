@@ -6,7 +6,7 @@
 >&emsp;&emsp;随着计算机技术和互联网技术的不断发展，人们从最开始的大哥大到传呼机，从传呼机到手机，再到如今的智能穿戴设备等，人们一直在探索便携的交互体验。但随着科技的进步，人们也需求更多的功能，于是，手机的功能从最开始的通信设备变到如今的多媒体娱乐通信办公等多功能的设备，这些功能都是由App提供的，各个软件公司推出自己的App来提供服务，我们也体验到了科技进步带来的便捷，但是由于各个公司推出的App都是中心化的服务，这也就导致了如果软件公司由于各种各样的原因不去运行App的服务器，也不维护App，就会导致这个App被废弃，存储在其中的信息资料也随着公司的服务器的关闭而永久消失，如果是这些信息是游戏数据，那么你辛辛苦苦奋战的日日夜夜的游戏装备，游戏等级都将成为`"时代的眼泪"`。  
 &emsp;&emsp;但是当区块链技术发展到今天，我们可以利用区块链不可篡改，永久保留的特性对App进行升级为Dapp(Decentralized application )，以去中心化的方式创造并运行它，就算这条区块链被人遗忘，你同样可以通过运行一个节点的方式继续拥有你的数据。通过这篇文章希望大家了解如何通过Move语言在Starcoin链上使用和开发一个Dapp。
 ## 二、 Dapp 开发 
-&emsp;&emsp;Dapp 从结构上可以分为前端和后端，Dapp的前端与传统app的前端类似，但Dapp的后端是区块链，这和传统的后端不同，传统方式是前端→API→数据库，Dapp是前端→智能合约→区块链，所以Dapp的开发主要是前端界面的交互，本文主要以网页前端作为示例。  
+&emsp;&emsp;Dapp 从结构上可以分为前端和后端，Dapp的前端与传统app的前端类似，但Dapp的后端是区块链，这和传统的后端不同，传统方式是前端→API→数据库，Dapp是前端→智能合约→区块链，所以Dapp的开发主要是前端界面的交互，本文主要以官方示例的Starmask-test-dapp 作为示例。  
 
 ### 1. 开发前端界面前的准备
 #### (1) Chrome 多账号分离开发环境
@@ -37,7 +37,8 @@
 &emsp;&emsp;StarMask 与MetaMask的整体架构类似，并且和web3 类似的提供了一个全局的变量，以便JavaScript SDK可以方便的与钱包插件进行交互。  
 
 **MetaMask架构图：**  
-![MetaMask架构图](./img/MetaMask架构图.png)
+![MetaMask架构图](./img/MetaMask架构图.png)  
+
 **Starcoin全局变量：**  
 ![Starcoin全局变量](./img/Starcoin全局变量.png)
 
@@ -47,7 +48,7 @@
 ![StarMask依赖库](./img/StarMask依赖库.png)
 
 
-### 3. 官方的示例Dapp
+### 3. 官方的示例Starmask-test-dapp 
 >&emsp;&emsp;Starcoin 和以太坊一样，也提供了一个JavaScript SDK ，可以通过SDK进行前端网页的开发，官方也提供了一个Dapp的示例，可以上面测试钱包的链接、发送STC、调用合约、铸造示例NFT，签名验证等等，功能上基本涵盖了常用的功能，源码也在Github上开源，我们开发Dapp时可以以此为基础进行开发。  
 
 **[官方示例Dapp](https://starmask-test-dapp.starcoin.org/):**  
@@ -58,7 +59,7 @@ GitHub仓库地址：https://github.com/starcoinorg/starmask-test-dapp
 ![Dapp-test](./img/Dapp-test.png)
 
 ### 4. Starmask-test-dapp 分析
->&emsp;&emsp;我们在开发时可以对Starmask-test-dapp进行功能和流程分析，从中学到Dapp开发的流程和代码库的使用。  
+>&emsp;&emsp;我们在开发时可以对Starmask-test-dapp进行功能和流程分析，从中学到Dapp开发的流程和代码库的使用，整体的开发流程和代码库与以太坊上的开发类似，如果有以太坊上开发的经验，可以很轻松的转移到Starcoin上来。  
 
 #### (1) Starmask-test-dapp 依赖库
 >Starmask-test-dapp 主要依赖有starmask-onboarding、starmask-forwarder和starcoin.js。
