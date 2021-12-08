@@ -54,7 +54,7 @@ module.exports = {
           activeMatch: '^/blockchain/',
           children: [
             { text:'Starcoin',          link:'/blockchain/Starcoin'        },
-           
+            { text:'Dark Forest',          link:'/blockchain/DF'        },
           ],
          
         },
