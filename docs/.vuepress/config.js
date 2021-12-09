@@ -66,7 +66,7 @@ module.exports = {
             { text:'Git'       ,            link:'/other/git'},
             { text:'Linux'       ,         link:'/other/linux'},
             { text:'Docker'     ,          link:'/other/docker'},
-            { text:'environment',           link:'/other/environment'},
+            { text:'环境设置',           link:'/other/environment'},
             { text:'挖矿'       ,           link:'/other/miner'},
           ],
          
