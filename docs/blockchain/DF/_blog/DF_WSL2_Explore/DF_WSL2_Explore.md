@@ -1,6 +1,6 @@
 ---
 title: "黑暗森林DF显卡开图(WSL2)"
-data: 2020年12月7日
+data: 2021年12月7日
 ---
 ## 黑暗森林DF显卡开图(WSL2)
 >本文作者: [WGB](https://wgb5445.github.io/)  

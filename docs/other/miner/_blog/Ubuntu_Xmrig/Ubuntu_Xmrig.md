@@ -1,3 +1,7 @@
+---
+title: "Ubuntu上编译xmrig"
+data: 2021年12月4日
+---
 ## Ubuntu上编译xmrig
 >本文作者: [WGB](https://wgb5445.github.io/)  
           Twitter: [Adelaide5445](https://twitter.com/Adelaide5445)
