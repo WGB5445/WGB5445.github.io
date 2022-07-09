@@ -6,11 +6,9 @@ cover:
           
 ### 获取固定输入后的得出的 Token 数
 **getInputPrice 公式**  
-![getInputPrice](./Javascript_AMM/AMM_getInputPrice.jpg)  
-
+<img src="./Javascript_AMM/AMM_getInputPrice.jpg">  
 **Fee 率为 0.3% 计算**  
-![getInputPrice_number](./Javascript_AMM/AMM_getinputprice_number.jpg)
-
+<img src="./Javascript_AMM/AMM_getinputprice_number.jpg">  
 **Javascript 代码**
 ```
 function  AMM_get_out_token (input , x, y, fee, tatolfee) {
@@ -26,11 +24,9 @@ function  AMM_get_out_token (input , x, y, fee, tatolfee) {
 
 ### 获取固定输出所需要的 Token 数  
 **getOutputPrice 公式**   
-![getOutputPrice](./Javascript_AMM/AMM_getoutputPrice.jpg)  
-
+<img src="./Javascript_AMM/AMM_getoutputPrice.jpg">  
 **Fee 率为 0.3% 计算**  
-![getOutputPrice_number](./Javascript_AMM/AMM_getoutputprice_number.jpg)  
-
+<img src="./Javascript_AMM/AMM_getoutputprice_number.jpg">  
 **Javascript 代码**
 ```
 function AMM_get_in_token(output, x, y, fee, tatolfee){
