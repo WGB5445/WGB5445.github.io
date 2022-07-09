@@ -1,6 +1,6 @@
 ---
 title: "Javascript AMM 模型计算"
-data: 2022年7月9日
+date: 2022-07-09
 cover: 
 ---
           
