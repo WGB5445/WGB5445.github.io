@@ -1,6 +1,9 @@
 name: Deploy
 
-on: [push]
+on: 
+  push:
+    branches: [hexo-blog-src]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -12,26 +15,37 @@ jobs:
       with:
         submodules: true # Checkout private submodules(themes or something else).
     
+    - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          # 选择要使用的 node 版本
+          node-version: '18'
+
     # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
     - name: Cache node modules
-      uses: actions/cache@v1
-      id: cache
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      uses: actions/cache@v2
+      id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
     - name: Install Dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: yarn 
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      run: yarn --frozen-lockfile
     
-    # Deploy hexo blog website.
-    - name: Deploy
-      id: deploy
-      uses: sma11black/hexo-action@v1.0.3
-      with:
-        deploy_key: ${{ secrets.GITHUB_TOKEN }}
-    # Use the output from the `deploy` step(use for test action)
-    - name: Get the output
-      run: |
-        echo "${{ steps.deploy.outputs.notify }}"
+    - name: Build Hexo site
+        run: yarn build
+
+    - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          # 部署到 gh-pages 分支
+          target_branch: hexo-blog
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: public
+        env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
