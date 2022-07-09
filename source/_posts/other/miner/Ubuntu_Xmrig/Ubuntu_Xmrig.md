@@ -1,6 +1,6 @@
 ---
 title: Ubuntu上编译xmrig
-date: 2021-12-04 13:34:43
+date: 2021-10-8 17:18:36
 cover: 
 ---
 ## Ubuntu上编译xmrig
