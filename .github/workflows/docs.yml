@@ -2,7 +2,7 @@ name: Deploy
 
 on: 
   push:
-    branches: [hexo-blog-src]
+    branches: [Hexo-blog-src]
     workflow_dispatch:
 
 jobs:
