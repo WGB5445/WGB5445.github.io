@@ -1,12 +1,12 @@
 ---
-title: Soldility-1 入门概述
+title: Solidity-1 简要概述
 date: 2022-07-10 10:00:46
-tags: 
+tags:
     - 以太坊
-    - Soldility
+    - solidity
 categories:
-    - SoldilityTutorial
-description: 简单概述 Soldility 是什么？语言上的组成？
+    - solidityTutorial
+description: 简单概述 Solidity 是什么？语言上的组成？
 ---
 Solidity 是一种面向合约的高级编程语言，用于实现智能合约。Solidity 受到 C++，Python和JavaScript 的影响，旨在针对以太坊虚拟机（EVM）。
 

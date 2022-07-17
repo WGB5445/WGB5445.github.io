@@ -2,7 +2,7 @@
 title: 简单的CSS
 date: 2022-05-08 08:57:59
 tags:
-cover: url(dog.jpg)
+cover:
 ---
 
 ## 一、什么是 CSS?
