@@ -1,7 +1,11 @@
 ---
-title: Solidity-3-Run
+title: Solidity-3 编译简单合约并交互
 date: 2022-07-23 17:20:44
 tags:
+    - 以太坊
+    - solidity
+categories:
+    - solidityTutorial
 ---
 初学者和大部分简单的部署都可以使用 Remix 作为开发调试环境
 
