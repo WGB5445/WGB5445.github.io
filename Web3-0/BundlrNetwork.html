@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Bundlr Network -- 分布式存储的兼容层 | WGB的小破站</title><meta name="keywords" content="分布式存储"><meta name="author" content="不霁何虹"><meta name="copyright" content="不霁何虹"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="警告警告 : Web3尚在初期，任何项目都有风险，投资需谨慎，本文作为经验分享，不作为投资建议      Bundlr Network 介绍Bundlr通过启用对Arweave的多链支持，使分散的永久数据存储变得快速而简单。Arweave是唯一一个永久存储数据的分散式数据链。Bundlr在不牺牲安全性或可用性的情况下，将Arweave上执行的交易量增加了4000%，并且在上传数据方面的速度提高了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bundlr Network -- 分布式存储的兼容层">
+<meta property="og:url" content="https://wgb5445.github.io/Web3-0/BundlrNetwork.html">
+<meta property="og:site_name" content="WGB的小破站">
+<meta property="og:description" content="警告警告 : Web3尚在初期，任何项目都有风险，投资需谨慎，本文作为经验分享，不作为投资建议      Bundlr Network 介绍Bundlr通过启用对Arweave的多链支持，使分散的永久数据存储变得快速而简单。Arweave是唯一一个永久存储数据的分散式数据链。Bundlr在不牺牲安全性或可用性的情况下，将Arweave上执行的交易量增加了4000%，并且在上传数据方面的速度提高了">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2022-05-14T13:34:43.000Z">
+<meta property="article:modified_time" content="2022-09-10T05:08:40.132Z">
+<meta property="article:author" content="不霁何虹">
+<meta property="article:tag" content="分布式存储">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="https://arweave.net/mFFcgeIoLnhzQDYAHTYHkQ1eEYVwO9XvU7GitAUnq4U"><link rel="canonical" href="https://wgb5445.github.io/Web3-0/BundlrNetwork"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Bundlr Network -- 分布式存储的兼容层',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-10 05:08:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://bafkreigk6ekvsnbt4xdczonof7u3rlw2ton4lbszgwxosz2a24jiwc364y.ipfs.infura-ipfs.io/" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">WGB的小破站</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Bundlr Network -- 分布式存储的兼容层</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-05-14T13:34:43.000Z" title="发表于 2022-05-14 13:34:43">2022-05-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-10T05:08:40.132Z" title="更新于 2022-09-10 05:08:40">2022-09-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Web3-0/">Web3.0</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Bundlr Network -- 分布式存储的兼容层"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><blockquote>
+<mark class="hl-label red">警告警告</mark> : Web3尚在初期，任何项目都有风险，投资需谨慎，本文作为经验分享，不作为投资建议  
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/about/introduction"> Bundlr Network 介绍</a><br>Bundlr通过启用对Arweave的多链支持，使分散的永久数据存储变得快速而简单。<br>Arweave是唯一一个永久存储数据的分散式数据链。<br>Bundlr在不牺牲安全性或可用性的情况下，将Arweave上执行的交易量增加了4000%，并且在上传数据方面的速度提高了约3000倍。<br>Bundlr具有无限可扩展性，其技术允许用户访问永久数据存储，并具有即时和有保证的交易最终性。它支持多种加密货币，包括以太坊，Solana，Polygon和Avalanche。</p>
+</blockquote>
+<h1 id="Web2-0-存储"><a href="#Web2-0-存储" class="headerlink" title="Web2.0-存储"></a>Web2.0-存储</h1><blockquote>
+<p>电子时代如果没有一个安全的存储设备，那么你什么都留不下</p>
+</blockquote>
+<p>记录，是人类进步最根本的途径，记录代表着传承，知识可以代代相传，如果少了古代流传下来的诗书，医书，以及各种著作，人类的文明不会如此璀璨，人们只会一遍一遍的造同样的轮子。</p>
+<p>对以前的人来说，写在纸上、刻在石头上是比较好的记录方式，那么到了电子时代，我们每天产生的数据量极为巨大，这时我们会产生思考，我们想要保留些什么?哪些是可以被舍弃的？</p>
+<p>对于这个问题不同的人有不同的答案，但相同点就是这个答案一定你想保存的东西，这时就会产生出另一个问题，我存在哪里？它安全么？可以保存多久？会不会丢失？</p>
+<p>有几个方向的选择 U盘？硬盘？固态硬盘？网盘？云存储？</p>
+<ul>
+<li><p>U盘容易丢失、容易损坏、但便携性好适合短时间存储</p>
+</li>
+<li><p>机械硬盘写入较慢，价格较便宜、但是太笨重，容量上限比较低适合长时间存储的场景</p>
+</li>
+<li><p>固态硬盘价格高、读写快、但是比较容易损坏适合快速读写的场景</p>
+</li>
+<li><p>网盘下载速度不确定、价格适中但是较为中心化如果网盘公司倒闭，数据将全部丢失</p>
+</li>
+<li><p>云存储价格较贵，需要自己搭建服务器，虽然比较中心化但是自己交钱自己用也算舒心</p>
+</li>
+</ul>
+<h1 id="Web3-0-时代-存储"><a href="#Web3-0-时代-存储" class="headerlink" title="Web3.0 时代-存储"></a>Web3.0 时代-存储</h1><p>Web3.0 时代初期的我们不如来看看新的一些方案：  </p>
+<p><strong>“去中心化存储” Arweave 以及它的”兼容层” Bundlr Network</strong></p>
+<h2 id="Arweave"><a href="#Arweave" class="headerlink" title="Arweave"></a>Arweave</h2><p>Arweave 最重要的特点在于 “永久储存”。它将自己描述为一种新颖的数据存储区块链协议，实现了 “永久网络” 的概念，并创建了真正的永久数据</p>
+<p>Arweave 是一个激励存储协议，基于区块链技术作为激励和维护网络的手段  </p>
+<p>跟传统的按需购买的方式不同，它实现了：一次付费，永久使用</p>
+<p>不过，Arweave还尚在初期，不建议将大量的数据存入其中</p>
+<h2 id="Bundlr-Network"><a href="#Bundlr-Network" class="headerlink" title="Bundlr Network"></a>Bundlr Network</h2><p>Arweave作为底层协议，不好与用户进行交互，Bundlr Network 可以帮忙解决这个问题</p>
+<p>Bundlr Network 基于 Arweave 作为底层存储，优点是支持其他链上的资产作为 AR 存储的费用</p>
+<p>对于大多数人来说，没有人会单独保存一些 AR ，大家经常持有 ETH、Matic、SOL 等资产  </p>
+<p>当你想保存一些东西的时候，需要兑换一些 AR，才能保存，这对于普通用户是极为不方便的 </p>
+<p>Bundlr Network 就可以轻松解决这个问题，在存储和用户中间做一个兼容，支持用户使用不同的 Token 进行付费</p>
+<h1 id="使用-Bundlr-Network-存储"><a href="#使用-Bundlr-Network-存储" class="headerlink" title="使用 Bundlr Network 存储"></a>使用 Bundlr Network 存储</h1><p><a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/overview">Bundlr Network 文档</a></p>
+<p>使用 Bundlr Network 的方式有很多种：</p>
+<ul>
+<li><strong>CLI</strong> – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/cli">https://docs.bundlr.network/docs/client/cli</a></li>
+<li><strong>JS Client</strong> – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/js">https://docs.bundlr.network/docs/client/js</a><ul>
+<li><strong>Creating,Signing and Posting</strong> – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/transactions">https://docs.bundlr.network/docs/client/transactions</a></li>
+<li><strong>Tags</strong> – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/tags">https://docs.bundlr.network/docs/client/tags</a></li>
+<li><strong>Uploading a directory using the CLI</strong> – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/upload">https://docs.bundlr.network/docs/client/upload</a></li>
+</ul>
+</li>
+<li><strong>Bundlr in the browser</strong> – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/web">https://docs.bundlr.network/docs/client/web</a></li>
+</ul>
+<p>可以查看官网文档的更多示例：</p>
+<ul>
+<li>完整示例 – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/examples/full-example">https://docs.bundlr.network/docs/client/examples/full-example</a></li>
+<li>注资示例 – <a target="_blank" rel="noopener" href="https://docs.bundlr.network/docs/client/examples/funding-your-account">https://docs.bundlr.network/docs/client/examples/funding-your-account</a></li>
+</ul>
+<h2 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @bundlr-network/client</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以下所有示例均以最小单位在 Arweave 中付款<br>只需更改您的钱包 -w  和 货币 -c 即可使用其他货币</p>
+</blockquote>
+<h3 id="命令行界面"><a href="#命令行界面" class="headerlink" title="命令行界面"></a>命令行界面</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Usage: Bundlr [options] [command]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -h, --host &lt;string&gt;          Bundlr node hostname/URL (eg http://node1.bundlr.network)</span><br><span class="line">  -w, --wallet &lt;string&gt;        Path to keyfile or the private key itself (default: &quot;default&quot;)</span><br><span class="line">  -c, --currency &lt;string&gt;      The currency to use</span><br><span class="line">  --timeout &lt;number&gt;           The timeout (in ms) for API HTTP requests - increase if you get timeouts for upload</span><br><span class="line">  --no-confirmation            Disable confirmations for certain actions</span><br><span class="line">  --multiplier &lt;number&gt;        Adjust the multiplier used for tx rewards - the higher the faster the network will</span><br><span class="line">                               process the transaction. (default: &quot;1.00&quot;)</span><br><span class="line">  --batch-size &lt;number&gt;        Adjust the upload-dir batch size (process more items at once - uses more resources</span><br><span class="line">                               (network, memory, cpu) accordingly!) (default: &quot;5&quot;)</span><br><span class="line">  --debug, -d                  Increases verbosity of errors and logs additional debug information. Used for</span><br><span class="line">                               troubleshooting. (default: false)</span><br><span class="line">  --index-file &lt;string&gt;        Name of the file to use as an index for upload-dir manifests (relative to the path</span><br><span class="line">                               provided to upload-dir).</span><br><span class="line">  --provider-url &lt;string&gt;      Override the provider URL</span><br><span class="line">  --contract-address &lt;string&gt;  Override the contract address</span><br><span class="line">  --content-type &lt;string&gt;      Override the content type for *ALL* files uploaded</span><br><span class="line">  --remove-deleted             Removes previously uploaded (but now deleted) items from the manifest</span><br><span class="line">  --force-chunking             Forces usage of chunking for all files regardless of size</span><br><span class="line">  -v, --version                Gets the current package version of the bundlr client</span><br><span class="line">  --help                       display help for command</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  balance &lt;address&gt;            Gets the specified user&#x27;s balance for the current Bundlr node</span><br><span class="line">  withdraw &lt;amount&gt;            Sends a fund withdrawal request</span><br><span class="line">  upload &lt;file&gt;                Uploads a specified file</span><br><span class="line">  upload-dir &lt;folder&gt;          Uploads a folder (with a manifest)</span><br><span class="line">  deploy &lt;folder&gt;              (DEPRECATED - use the functionally identical &#x27;upload-dir&#x27; instead.) Deploys a folder</span><br><span class="line">                               (with a manifest) to the specified bundler</span><br><span class="line">  fund &lt;amount&gt;                Funds your account with the specified amount of atomic units</span><br><span class="line">  price &lt;bytes&gt;                Check how much of a specific currency is required for an upload of &lt;amount&gt; bytes</span><br><span class="line">  help [command]               display help for command</span><br></pre></td></tr></table></figure>
+<h3 id="获取地址的金额"><a href="#获取地址的金额" class="headerlink" title="获取地址的金额"></a>获取地址的金额</h3><p>在 balance 后填写使用的钱包地址，钱包地址的格式应该与 -c 后的货币网络地址匹配</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundlr balance 0xbEbE89611b732B9569Bf409c0Ae2e02EdFB2A59D -h https://node1.bundlr.network -c matic</span><br></pre></td></tr></table></figure>
+<p>因为当前没有使用这个地址对节点注入金额，所以应给返回:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Balance: 0 wei (0 matic)</span><br></pre></td></tr></table></figure>
+<h3 id="查看存储需要的金额"><a href="#查看存储需要的金额" class="headerlink" title="查看存储需要的金额"></a>查看存储需要的金额</h3><p>因为存储需要收取一定费用，并且不同链收取的 Token fee 也不同，所以需要查看指定大小需要付的费用<br>通过 matic 付费 ，存储 1000000 bytes 数据需要 0.010660399591891892 matic</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundlr price 1000000 -h https://node1.bundlr.network -c matic</span><br></pre></td></tr></table></figure>
+<p>返回：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Price for 1000000 bytes in matic is 10660399591891892 wei (0.010660399591891892 matic)</span><br></pre></td></tr></table></figure>
+<h3 id="向节点注入金额"><a href="#向节点注入金额" class="headerlink" title="向节点注入金额"></a>向节点注入金额</h3><p>如果想要使用 Bundlr Network 存入文件到 Arweave 网络，需要预先注入一定量的金额来抵扣存入网络的费用<br>钱包当前网络中必须有足够的 Token<br>需要用 -w 填写私钥或者json 并 -c 指定 Token<br>需要输入 Y 确认，即可注入资金</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundlr fund 10660399591891892 -h https://node1.bundlr.network -w 128111105cf9aea4546cd0c1008b7b7ad2508b1dbe855bc7d4e950316c6a2260 -c matic </span><br></pre></td></tr></table></figure>
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><p>当成功注入资金后，可以上传一个文件，但上传文件所需金额不能超过这个钱包向节点注入的金额</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundlr upload .\img\dog.jpg -c matic -h https://node1.bundlr.network -w 128111105cf9aea4546cd0c1008b7b7ad2508b1dbe855bc7d4e950316c6a2260</span><br></pre></td></tr></table></figure>
+<p>如果成功上传则会返回钱包地址和已上传文件的 URL </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Loaded address: 0xbEbE89611b732B9569Bf409c0Ae2e02EdFB2A59D</span><br><span class="line">Uploaded to https://arweave.net/mFFcgeIoLnhzQDYAHTYHkQ1eEYVwO9XvU7GitAUnq4U</span><br></pre></td></tr></table></figure>
+<p>访问这个 URL 就可以看到上传的文件了</p>
+<p><a target="_blank" rel="noopener" href="https://arweave.net/mFFcgeIoLnhzQDYAHTYHkQ1eEYVwO9XvU7GitAUnq4U">https://arweave.net/mFFcgeIoLnhzQDYAHTYHkQ1eEYVwO9XvU7GitAUnq4U</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://wgb5445.github.io">不霁何虹</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://wgb5445.github.io/Web3-0/BundlrNetwork.html">https://wgb5445.github.io/Web3-0/BundlrNetwork.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://wgb5445.github.io" target="_blank">WGB的小破站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/">分布式存储</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/BlockChainETH/RustETHAddress.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">以太坊系列 - Rust 私钥生成以太坊地址</div></div></a></div><div class="next-post pull-right"><a href="/default/WindowsRustInstall.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Windows 上用国内源安装Rust</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://bafkreigk6ekvsnbt4xdczonof7u3rlw2ton4lbszgwxosz2a24jiwc364y.ipfs.infura-ipfs.io/" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不霁何虹</div><div class="author-info__description">一些 Web3.0 和 一些 有趣的事情</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/WGB5445"><i class="fab fa-github"></i><span>My Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/wgb5445" target="_blank" title=""><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎大家来到我的小破站
+正在建设中building..
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web2-0-%E5%AD%98%E5%82%A8"><span class="toc-number">1.</span> <span class="toc-text">Web2.0-存储</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web3-0-%E6%97%B6%E4%BB%A3-%E5%AD%98%E5%82%A8"><span class="toc-number">2.</span> <span class="toc-text">Web3.0 时代-存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Arweave"><span class="toc-number">2.1.</span> <span class="toc-text">Arweave</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bundlr-Network"><span class="toc-number">2.2.</span> <span class="toc-text">Bundlr Network</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Bundlr-Network-%E5%AD%98%E5%82%A8"><span class="toc-number">3.</span> <span class="toc-text">使用 Bundlr Network 存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CLI"><span class="toc-number">3.1.</span> <span class="toc-text">CLI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="toc-number">3.1.2.</span> <span class="toc-text">命令行界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80%E7%9A%84%E9%87%91%E9%A2%9D"><span class="toc-number">3.1.3.</span> <span class="toc-text">获取地址的金额</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E9%9C%80%E8%A6%81%E7%9A%84%E9%87%91%E9%A2%9D"><span class="toc-number">3.1.4.</span> <span class="toc-text">查看存储需要的金额</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E8%8A%82%E7%82%B9%E6%B3%A8%E5%85%A5%E9%87%91%E9%A2%9D"><span class="toc-number">3.1.5.</span> <span class="toc-text">向节点注入金额</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.6.</span> <span class="toc-text">上传文件</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/default/Clash_Arch_linux_Tun.html" title="ArchLinux Clash Tun 模式失败问题"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ArchLinux Clash Tun 模式失败问题"/></a><div class="content"><a class="title" href="/default/Clash_Arch_linux_Tun.html" title="ArchLinux Clash Tun 模式失败问题">ArchLinux Clash Tun 模式失败问题</a><time datetime="2022-09-10T13:01:43.000Z" title="发表于 2022-09-10 13:01:43">2022-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/solidityTutorial/Solidity-3-Run.html" title="Solidity-3 编译简单合约并交互"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Solidity-3 编译简单合约并交互"/></a><div class="content"><a class="title" href="/solidityTutorial/Solidity-3-Run.html" title="Solidity-3 编译简单合约并交互">Solidity-3 编译简单合约并交互</a><time datetime="2022-07-23T17:20:44.000Z" title="发表于 2022-07-23 17:20:44">2022-07-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/solidityTutorial/Solidity-2-Env.html" title="Solidity-2 开发环境"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Solidity-2 开发环境"/></a><div class="content"><a class="title" href="/solidityTutorial/Solidity-2-Env.html" title="Solidity-2 开发环境">Solidity-2 开发环境</a><time datetime="2022-07-17T14:38:31.000Z" title="发表于 2022-07-17 14:38:31">2022-07-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Web3-0/ConnectMetaMask.html" title="链接 MetaMask Web3 钱包"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="链接 MetaMask Web3 钱包"/></a><div class="content"><a class="title" href="/Web3-0/ConnectMetaMask.html" title="链接 MetaMask Web3 钱包">链接 MetaMask Web3 钱包</a><time datetime="2022-07-17T08:56:53.000Z" title="发表于 2022-07-17 08:56:53">2022-07-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/solidityTutorial/Solidity-1-getting-started.html" title="Solidity-1 简要概述"><img src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Solidity-1 简要概述"/></a><div class="content"><a class="title" href="/solidityTutorial/Solidity-1-getting-started.html" title="Solidity-1 简要概述">Solidity-1 简要概述</a><time datetime="2022-07-10T10:00:46.000Z" title="发表于 2022-07-10 10:00:46">2022-07-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 不霁何虹</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
